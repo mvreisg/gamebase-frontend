@@ -1,0 +1,151 @@
+body {
+    background-color: #0A0217;
+    margin: 0;
+}
+
+#login-balloon-container {
+    display: flex;   
+    justify-content: center;
+    align-items: center;             
+    width: 100%;
+    height: 100vh;
+}
+
+#login-balloon-box {
+    display: flex;
+    flex-flow: column;             
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 16px;
+    max-width: 80%;
+    width: 600px;
+    height: 600px;
+    background-color: #100E41;
+    border: 4px solid #31246D;
+    padding: 0 36px;
+}
+
+#login-balloon-box h1 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 2.5em;
+    font-weight: 900;
+    color: #FFFFFF;
+}
+
+#login-balloon-box .text-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;    
+    background-color: #1E1E1E;
+    border: 4px solid #31246D;
+    border-radius: 12px;
+}
+
+#login-balloon-box .text-div button {
+    border: 0;
+    background-color: rgba(0,0,0,0);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0 9px;
+    height: 100%;
+    cursor: pointer;
+}
+
+#login-balloon-box .text-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 42px;
+}
+
+#login-balloon-box .text-label > input {
+    font-family: "Inter", sans-serif;
+    font-size: 0.975em;
+    background-color: rgba(0,0,0,0);   
+    border: 0;
+    padding: 0 14px; 
+    width: 100%;
+    height: 100%;
+    color: #FFFFFF;         
+}
+
+#one-week-checkbox-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;    
+    width: 100%;
+}
+
+#one-week-checkbox-div > span {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #FFFFFF
+}
+
+#one-week-checkbox-label  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12px;
+    height: 12px;
+    border: 4px solid #31246D;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#one-week-checkbox-label > input {
+    width: 100%;
+    height: 100%;
+    margin: 0;  
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.unchecked-checkbox {
+    background-color: #000000;
+}
+
+.checked-checkbox {
+    background-color: #31246D;
+}
+
+#login-button-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 52px;
+    border: 4px solid #31246D;
+    background-color: #31246D;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#login-button-label > button {
+    background-color: rgba(0,0,0,0);   
+    border: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+#login-button-label > button > span {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    color: #FFFFFF;
+    cursor: pointer;
+}
