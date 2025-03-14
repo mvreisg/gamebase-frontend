@@ -12,19 +12,21 @@
         <div id="login-balloon-container">
             <form id="login-balloon-box">                
                 <h1>Gamebase</h1>                
-                <div class="text-div">
-                    <label class="text-label" for="username">
-                        <input id="username" name="username" type="text" placeholder="Seu nome de usuário..." />
-                    </label>
-                </div>                
-                <div class="text-div">
-                    <label class="text-label" for="password">
-                        <input id="password" name="password" type="password" placeholder="Sua senha..." />
-                    </label>
-                    <button type="button" onclick="togglePasswordVisibility();">
-                        <img id="password-visibility-indicator" src="./assets/svg/eye-open-white.svg"/>
-                    </button>                    
-                </div>
+                <div id="login-balloon-texts">
+                    <div class="text-div">
+                        <label class="text-label" for="username">
+                            <input id="username" name="username" type="text" placeholder="Seu nome de usuário..." />
+                        </label>
+                    </div>         
+                    <div class="text-div">
+                        <label class="text-label" for="password">
+                            <input id="password" name="password" type="password" placeholder="Sua senha..." />
+                        </label>
+                        <button type="button" onclick="togglePasswordVisibility();">
+                            <img id="password-visibility-indicator" src="./assets/svg/eye-open-white.svg"/>
+                        </button>                    
+                    </div>    
+                </div>                       
                 <div id="one-week-checkbox-div">
                     <label id="one-week-checkbox-label" class="unchecked-checkbox" for="password">
                         <input id="one-week-checkbox" name="one-week-checkbox" type="checkbox" onclick="toggleOneWeekCheckboxState();" />
@@ -32,7 +34,7 @@
                     <span>Lembrar de mim por uma semana</span>
                 </div>
                 <label id="login-button-label" for="submit">
-                    <button id="login-button" name="submit" type="submit">
+                    <button id="login-button" name="submit" type="button">
                         <span>Entrar</span>                   
                     </button>
                 </label>            

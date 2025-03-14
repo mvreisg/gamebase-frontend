@@ -14,15 +14,15 @@ body {
 #login-balloon-box {
     display: flex;
     flex-flow: column;             
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 1rem;
     max-width: 80%;
-    width: 600px;
-    height: 600px;
+    width: 32.5rem;
+    height: 32.5rem;
     background-color: #100E41;
-    border: 4px solid #31246D;
-    padding: 0 36px;
+    border: 0.25rem solid #31246D;
+    padding: 2.25rem;
 }
 
 #login-balloon-box h1 {
@@ -30,7 +30,16 @@ body {
     font-family: "Inter", sans-serif;
     font-size: 2.5em;
     font-weight: 900;
-    color: #FFFFFF;
+    color: #FFFFFF; 
+    padding-bottom: 6.75rem;  
+}
+
+#login-balloon-box #login-balloon-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 3.125rem;
+    width: 100%;
+    padding-bottom: 6.875rem;
 }
 
 #login-balloon-box .text-div {
@@ -38,10 +47,9 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;    
     background-color: #1E1E1E;
-    border: 4px solid #31246D;
-    border-radius: 12px;
+    border: 0.25rem solid #31246D;
+    border-radius: 0.75rem;
 }
 
 #login-balloon-box .text-div button {
@@ -50,7 +58,7 @@ body {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding: 0 9px;
+    padding: 0 0.5625rem;
     height: 100%;
     cursor: pointer;
 }
@@ -60,15 +68,15 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 42px;
+    height: 2.625rem;
 }
 
 #login-balloon-box .text-label > input {
     font-family: "Inter", sans-serif;
-    font-size: 0.975em;
+    font-size: 0.975rem;
     background-color: rgba(0,0,0,0);   
     border: 0;
-    padding: 0 14px; 
+    padding: 0 0.875rem; 
     width: 100%;
     height: 100%;
     color: #FFFFFF;         
@@ -79,13 +87,15 @@ body {
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    gap: 5px;    
+    gap: 0.5625rem;    
     width: 100%;
+    padding-bottom: 1.25rem;
 }
 
 #one-week-checkbox-div > span {
     font-family: "Inter", sans-serif;
     font-weight: 600;
+    font-size: 0.75rem;
     color: #FFFFFF
 }
 
@@ -93,10 +103,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 12px;
-    height: 12px;
-    border: 4px solid #31246D;
-    border-radius: 4px;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 0.25rem solid #31246D;
+    border-radius: 0.25rem;
     cursor: pointer;
 }
 
@@ -123,19 +133,20 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 52px;
-    border: 4px solid #31246D;
+    box-sizing: border-box;
+    height: 3.75rem;
+    border: 0.25rem solid #31246D;
     background-color: #31246D;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     cursor: pointer;
 }
 
-#login-button-label > button {
+#login-button-label > button {    
     background-color: rgba(0,0,0,0);   
-    border: 0;
+    border: 0;    
     width: 100%;
     height: 100%;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -145,7 +156,7 @@ body {
 #login-button-label > button > span {
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    font-size: 1em;
+    font-size: 1rem;
     color: #FFFFFF;
     cursor: pointer;
 }
