@@ -3,6 +3,7 @@ let oneWeekInput = null;
 let passwordVisibilityIndicatorImage = null;
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
+const prefix = './../assets/svg/';
 
 window.onload = () => {
     oneWeekLabel = document.querySelector("#one-week-checkbox-label");    
@@ -42,8 +43,7 @@ const setPasswordVisibility = function(isVisible){
 }
 
 const setPasswordVisibilityVisual = function(isVisible){    
-    const src = passwordVisibilityIndicatorImage.getAttribute("src");
-    const prefix = './assets/svg/';
+    const src = passwordVisibilityIndicatorImage.getAttribute("src");    
     const suffix = '.svg'
     const passwordInput = document.querySelector("#password");
     if (isVisible){

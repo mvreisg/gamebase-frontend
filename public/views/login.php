@@ -5,8 +5,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
         <title>Gamebase - Login</title>
-        <link rel="stylesheet" href="./src/styles/index.css">
-        <script type="text/javascript" src="./src/scripts/index.js"></script>
+        <link rel="stylesheet" href="./../styles/login.css">
+        <script type="text/javascript" src="./../scripts/login.js"></script>
     </head>
     <body>
         <div id="login-balloon-container">
