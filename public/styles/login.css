@@ -19,7 +19,7 @@ body {
     border-radius: 1rem;
     max-width: 80%;
     width: 32.5rem;
-    height: 32.5rem;
+    height: 26.25rem;
     background-color: #100E41;
     border: 0.25rem solid #31246D;
     padding: 2.25rem;
@@ -31,18 +31,17 @@ body {
     font-size: 2.5em;
     font-weight: 900;
     color: #FFFFFF; 
-    padding-bottom: 6.75rem;  
+    padding-top: 0.625rem;
+    padding-bottom: 2.8125rem;
 }
 
 #login-balloon-box #login-balloon-texts {
     display: flex;
     flex-direction: column;
-    gap: 3.125rem;
     width: 100%;
-    padding-bottom: 6.875rem;
 }
 
-#login-balloon-box .text-div {
+#login-balloon-box #login-balloon-texts .text-input-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -52,7 +51,7 @@ body {
     border-radius: 0.75rem;
 }
 
-#login-balloon-box .text-div button {
+#login-balloon-box #login-balloon-texts .text-input-div button {
     border: 0;
     background-color: rgba(0,0,0,0);
     appearance: none;
@@ -63,7 +62,7 @@ body {
     cursor: pointer;
 }
 
-#login-balloon-box .text-label {
+#login-balloon-box #login-balloon-texts .text-input-label {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,7 +70,7 @@ body {
     height: 2.625rem;
 }
 
-#login-balloon-box .text-label > input {
+#login-balloon-box #login-balloon-texts .text-input-label > input {
     font-family: "Inter", sans-serif;
     font-size: 0.975rem;
     background-color: rgba(0,0,0,0);   
@@ -80,6 +79,28 @@ body {
     width: 100%;
     height: 100%;
     color: #FFFFFF;         
+}
+
+#login-balloon-box #login-balloon-texts .warning-text {
+    padding-top: 0.5rem;
+    padding-bottom: 1.6875rem;
+    padding-left: 0.9375rem;
+}
+
+#login-balloon-box #login-balloon-texts .warning-text > p {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #FF0000;
+}
+
+#login-balloon-box #login-confirmations-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
 }
 
 #one-week-checkbox-div {
