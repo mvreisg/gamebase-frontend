@@ -10,11 +10,11 @@
     </head>
     <body class="dark background">
         <div id="login-balloon-container">
-            <form id="login-balloon-box" class="dark login-balloon" method="POST">                
-                <h1 id="title" class="dark title">Gamebase</h1>  
+            <form id="login-balloon-box" class="dark" method="POST">                
+                <h1 id="title" class="dark">Gamebase</h1>  
                 <div id="theme-toggler-div">
-                    <div id="theme-toggler-bar" class="dark theme-toggler-bar-class">
-                        <div id="theme-toggler-circle" class="dark theme-toggler-circle-class" onclick="toggleTheme();">
+                    <div id="theme-toggler-bar" class="dark">
+                        <div id="theme-toggler-circle" class="dark" onclick="toggleTheme();">
                             <img src="./../assets/svg/sun-light.svg" />
                         </div>
                     </div>
@@ -42,10 +42,10 @@
                 </div>
                 <div id="login-confirmations-box">
                     <div id="one-week-checkbox-div">
-                        <label id="one-week-checkbox-label" class="unchecked dark checkbox-label" for="password">
+                        <label id="one-week-checkbox-label" class="unchecked dark" for="password">
                             <input id="one-week-checkbox" name="one-week-checkbox" type="checkbox" onclick="toggleOneWeekCheckboxState();" />
                         </label>
-                        <span class="dark one-week-reminder-text">Lembrar de mim por uma semana</span>
+                        <span id="one-week-reminder-text" class="dark">Lembrar de mim por uma semana</span>
                     </div>
                     <label id="login-button-label" for="submit" class="dark">
                         <button id="login-button" name="submit" type="submit" onclick="tryLogin();">

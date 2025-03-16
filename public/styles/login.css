@@ -18,12 +18,12 @@ body {
     height: 100vh;
 }
 
-.dark.login-balloon {
+#login-balloon-box.dark {
     background-color: #100E41;
     border: 0.25rem solid #31246D;
 }
 
-.light.login-balloon {
+#login-balloon-box.light {
     background-color: #C8BEF9;
     border: 0.25rem solid #8882BC;
 }
@@ -40,15 +40,15 @@ body {
     padding: 2.25rem;
 }
 
-.dark.title {
+#title.dark {
     color: #FFFFFF;         
 }
 
-.light.title {
+#title.light {
     color: #000000;
 }
 
-#login-balloon-box h1 {
+#title {
     margin: 0;
     font-family: "Inter", sans-serif;
     font-size: 2.5em;
@@ -63,11 +63,11 @@ body {
     height: 1.75rem;
 }
 
-.dark.theme-toggler-bar-class {
+#theme-toggler-bar.dark {
     background-color: #31246D;
 }
 
-.light.theme-toggler-bar-class {
+#theme-toggler-bar.light {
     background-color: #8882BC;
 }
 
@@ -78,14 +78,14 @@ body {
     border-radius: 0.75rem;
 }
 
-.dark.theme-toggler-circle-class {
+#theme-toggler-circle.dark {
     left: -50%;
     top: -50%;
     background-color: #1E1E1E;
     border: 0.25rem solid #31246D;
 }
 
-.light.theme-toggler-circle-class {
+#theme-toggler-circle.light {
     left: 50%;
     top: -50%;
     background-color: #A294E1;
@@ -103,7 +103,7 @@ body {
     cursor: pointer;
 }
 
-#login-balloon-box #login-balloon-texts {
+#login-balloon-texts {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -119,7 +119,7 @@ body {
     border: 0.25rem solid #8882BC;
 }
 
-#login-balloon-box #login-balloon-texts .text-input-div {
+#login-balloon-texts .text-input-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -127,7 +127,7 @@ body {
     border-radius: 0.75rem;
 }
 
-#login-balloon-box #login-balloon-texts .text-input-div button {
+#login-balloon-texts .text-input-div button {
     border: 0;
     background-color: rgba(0,0,0,0);
     appearance: none;
@@ -138,7 +138,7 @@ body {
     cursor: pointer;
 }
 
-#login-balloon-box #login-balloon-texts .text-input-label {
+#login-balloon-texts .text-input-label {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,7 +154,7 @@ body {
     color: #000000;         
 }
 
-#login-balloon-box #login-balloon-texts .text-input-label > input {
+#login-balloon-texts .text-input-label > input {
     font-family: "Inter", sans-serif;
     font-size: 0.975rem;
     background-color: rgba(0,0,0,0);   
@@ -164,13 +164,13 @@ body {
     height: 100%;
 }
 
-#login-balloon-box #login-balloon-texts .warning-text {
+#login-balloon-texts .warning-text {
     padding-top: 0.5rem;
     padding-bottom: 1.6875rem;
     padding-left: 0.9375rem;
 }
 
-#login-balloon-box #login-balloon-texts .warning-text > p {
+#login-balloon-texts .warning-text > p {
     margin: 0;
     font-family: "Inter", sans-serif;
     font-weight: 600;
@@ -178,7 +178,7 @@ body {
     color: #FF0000;
 }
 
-#login-balloon-box #login-confirmations-box {
+#login-confirmations-box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -196,25 +196,25 @@ body {
     padding-bottom: 1.25rem;
 }
 
-.dark.one-week-reminder-text {
+#one-week-reminder-text.dark {
     color: #FFFFFF
 }
 
-.light.one-week-reminder-text {
+#one-week-reminder-text.light {
     color: #000000
 }
 
-#one-week-checkbox-div > span {
+#one-week-reminder-text {
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-size: 0.75rem;
 }
 
-.dark.checkbox-label {
+#one-week-checkbox-label.dark {
     border: 0.25rem solid #31246D;
 }
 
-.light.checkbox-label {
+#one-week-checkbox-label.light {
     border: 0.25rem solid #8882BC;
 }
 
@@ -238,19 +238,19 @@ body {
     cursor: pointer;
 }
 
-.dark.unchecked {
+#one-week-checkbox-label.dark.unchecked {
     background-color: #000000;
 }
 
-.dark.checked {
+#one-week-checkbox-label.dark.checked {
     background-color: #31246D;
 }
 
-.light.unchecked {
+#one-week-checkbox-label.light.unchecked {
     background-color: #C6BDF2;
 }
 
-.light.checked {
+#one-week-checkbox-label.light.checked {
     background-color: #8882BC;
 }
 

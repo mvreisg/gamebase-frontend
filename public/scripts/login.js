@@ -50,13 +50,14 @@ const changeBodyTheme = function(){
     const title = document.querySelector("#title");
     title.classList = changeThemeClasses(title);
 
-    const form = document.querySelector('#login-balloon-box'); 
-    form.classList = changeThemeClasses(form);
+    const loginBalloonBox = document.querySelector('#login-balloon-box'); 
+    loginBalloonBox.classList = changeThemeClasses(loginBalloonBox);
 
-    const bar = document.querySelector("#theme-toggler-bar");
-    const circle = document.querySelector("#theme-toggler-circle");
-    bar.classList = changeThemeClasses(bar);
-    circle.classList = changeThemeClasses(circle);
+    const themeTogglerBar = document.querySelector("#theme-toggler-bar");
+    themeTogglerBar.classList = changeThemeClasses(themeTogglerBar);
+    
+    const themeTogglerCircle = document.querySelector("#theme-toggler-circle");    
+    themeTogglerCircle.classList = changeThemeClasses(themeTogglerCircle);
 
     const textInputs = document.querySelectorAll('.text-input-div');
     textInputs.forEach((value) => {
@@ -66,7 +67,7 @@ const changeBodyTheme = function(){
     const oneWeekCheckboxLabel = document.querySelector('#one-week-checkbox-label');
     oneWeekCheckboxLabel.classList = changeThemeClasses(oneWeekCheckboxLabel);
 
-    const oneWeekReminderSpan = document.querySelector('.one-week-reminder-text');
+    const oneWeekReminderSpan = document.querySelector('#one-week-reminder-text');
     oneWeekReminderSpan.classList = changeThemeClasses(oneWeekReminderSpan);
 
     const usernameField = document.querySelector("#username");
