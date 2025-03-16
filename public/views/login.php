@@ -8,22 +8,29 @@
         <link rel="stylesheet" href="./../styles/login.css">
         <script type="text/javascript" src="./../scripts/login.js"></script>
     </head>
-    <body>
+    <body class="dark background">
         <div id="login-balloon-container">
-            <form id="login-balloon-box" method="POST">                
-                <h1>Gamebase</h1>                
+            <form id="login-balloon-box" class="dark login-balloon" method="POST">                
+                <h1 id="title" class="dark title">Gamebase</h1>  
+                <div id="theme-toggler-div">
+                    <div id="theme-toggler-bar" class="dark theme-toggler-bar-class">
+                        <div id="theme-toggler-circle" class="dark theme-toggler-circle-class" onclick="toggleTheme();">
+                            <img src="./../assets/svg/sun-light.svg" />
+                        </div>
+                    </div>
+                </div>              
                 <div id="login-balloon-texts">
-                    <div class="text-input-div">
+                    <div class="dark text-input-div">
                         <label class="text-input-label" for="username">
-                            <input id="username" name="username" type="text" placeholder="Seu nome de usuário..." required />
+                            <input id="username" class="dark text-input" name="username" type="text" placeholder="Seu nome de usuário..." required />
                         </label>
                     </div>     
                     <div id="username-warning-div" class="warning-text">
                         <p>O username não foi informado!</p>
                     </div>    
-                    <div class="text-input-div">
+                    <div class="dark text-input-div">
                         <label class="text-input-label" for="password">
-                            <input id="password" name="password" type="password" placeholder="Sua senha..." required />
+                            <input id="password" class="dark text-input" name="password" type="password" placeholder="Sua senha..." required />
                         </label>
                         <button type="button" onclick="togglePasswordVisibility();">
                             <img id="password-visibility-indicator" src="./assets/svg/eye-open-white.svg"/>
@@ -35,14 +42,14 @@
                 </div>
                 <div id="login-confirmations-box">
                     <div id="one-week-checkbox-div">
-                        <label id="one-week-checkbox-label" class="unchecked-checkbox" for="password">
+                        <label id="one-week-checkbox-label" class="unchecked dark checkbox-label" for="password">
                             <input id="one-week-checkbox" name="one-week-checkbox" type="checkbox" onclick="toggleOneWeekCheckboxState();" />
                         </label>
-                        <span>Lembrar de mim por uma semana</span>
+                        <span class="dark one-week-reminder-text">Lembrar de mim por uma semana</span>
                     </div>
-                    <label id="login-button-label" for="submit">
+                    <label id="login-button-label" for="submit" class="dark">
                         <button id="login-button" name="submit" type="submit">
-                            <span>Entrar</span>                   
+                            <span class="dark">Entrar</span>                   
                         </button>
                     </label>            
                 </div>                                     

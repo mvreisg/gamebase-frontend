@@ -1,6 +1,13 @@
-body {
-    background-color: #0A0217;
+body {    
     margin: 0;
+}
+
+.dark.background {
+    background-color: #0A0217;
+}
+
+.light.background {
+    background-color: #DAD3FB;
 }
 
 #login-balloon-container {
@@ -11,6 +18,16 @@ body {
     height: 100vh;
 }
 
+.dark.login-balloon {
+    background-color: #100E41;
+    border: 0.25rem solid #31246D;
+}
+
+.light.login-balloon {
+    background-color: #C8BEF9;
+    border: 0.25rem solid #8882BC;
+}
+
 #login-balloon-box {
     display: flex;
     flex-flow: column;             
@@ -19,10 +36,16 @@ body {
     border-radius: 1rem;
     max-width: 80%;
     width: 32.5rem;
-    height: 26.25rem;
-    background-color: #100E41;
-    border: 0.25rem solid #31246D;
+    height: 26.25rem;    
     padding: 2.25rem;
+}
+
+.dark.title {
+    color: #FFFFFF;         
+}
+
+.light.title {
+    color: #000000;
 }
 
 #login-balloon-box h1 {
@@ -30,9 +53,54 @@ body {
     font-family: "Inter", sans-serif;
     font-size: 2.5em;
     font-weight: 900;
-    color: #FFFFFF; 
-    padding-top: 0.625rem;
-    padding-bottom: 2.8125rem;
+}
+
+#theme-toggler-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 1.75rem;
+}
+
+.dark.theme-toggler-bar-class {
+    background-color: #31246D;
+}
+
+.light.theme-toggler-bar-class {
+    background-color: #8882BC;
+}
+
+#theme-toggler-bar {
+    position: relative;
+    width: 1.875rem;
+    height: 0.875rem;
+    border-radius: 0.75rem;
+}
+
+.dark.theme-toggler-circle-class {
+    left: -50%;
+    top: -50%;
+    background-color: #1E1E1E;
+    border: 0.25rem solid #31246D;
+}
+
+.light.theme-toggler-circle-class {
+    left: 50%;
+    top: -50%;
+    background-color: #A294E1;
+    border: 0.25rem solid #8882BC;
+}
+
+#theme-toggler-circle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.25rem;
+    height: 1.25rem;    
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 #login-balloon-box #login-balloon-texts {
@@ -41,13 +109,21 @@ body {
     width: 100%;
 }
 
+.dark.text-input-div {
+    background-color: #1E1E1E;
+    border: 0.25rem solid #31246D;
+}
+
+.light.text-input-div {
+    background-color: #C6BDF2;
+    border: 0.25rem solid #8882BC;
+}
+
 #login-balloon-box #login-balloon-texts .text-input-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #1E1E1E;
-    border: 0.25rem solid #31246D;
     border-radius: 0.75rem;
 }
 
@@ -70,6 +146,14 @@ body {
     height: 2.625rem;
 }
 
+.dark.text-input{
+    color: #FFFFFF;         
+}
+
+.light.text-input{
+    color: #000000;         
+}
+
 #login-balloon-box #login-balloon-texts .text-input-label > input {
     font-family: "Inter", sans-serif;
     font-size: 0.975rem;
@@ -78,7 +162,6 @@ body {
     padding: 0 0.875rem; 
     width: 100%;
     height: 100%;
-    color: #FFFFFF;         
 }
 
 #login-balloon-box #login-balloon-texts .warning-text {
@@ -113,11 +196,26 @@ body {
     padding-bottom: 1.25rem;
 }
 
+.dark.one-week-reminder-text {
+    color: #FFFFFF
+}
+
+.light.one-week-reminder-text {
+    color: #000000
+}
+
 #one-week-checkbox-div > span {
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-size: 0.75rem;
-    color: #FFFFFF
+}
+
+.dark.checkbox-label {
+    border: 0.25rem solid #31246D;
+}
+
+.light.checkbox-label {
+    border: 0.25rem solid #8882BC;
 }
 
 #one-week-checkbox-label  {
@@ -125,8 +223,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 0.75rem;
-    height: 0.75rem;
-    border: 0.25rem solid #31246D;
+    height: 0.75rem;    
     border-radius: 0.25rem;
     cursor: pointer;
 }
@@ -141,12 +238,20 @@ body {
     cursor: pointer;
 }
 
-.unchecked-checkbox {
+.dark.unchecked {
     background-color: #000000;
 }
 
-.checked-checkbox {
+.dark.checked {
     background-color: #31246D;
+}
+
+.light.unchecked {
+    background-color: #C6BDF2;
+}
+
+.light.checked {
+    background-color: #8882BC;
 }
 
 #login-button-label {
@@ -156,10 +261,18 @@ body {
     width: 100%;
     box-sizing: border-box;
     height: 3.75rem;
-    border: 0.25rem solid #31246D;
-    background-color: #31246D;
     border-radius: 0.75rem;
     cursor: pointer;
+}
+
+#login-button-label.dark{
+    border: 0.25rem solid #31246D;
+    background-color: #31246D;
+}
+
+#login-button-label.light{
+    border: 0.25rem solid #A294E1;
+    background-color: #8882BC;
 }
 
 #login-button-label > button {    
@@ -178,6 +291,13 @@ body {
     font-family: "Inter", sans-serif;
     font-weight: 700;
     font-size: 1rem;
-    color: #FFFFFF;
     cursor: pointer;
+}
+
+#login-button-label > button > span.dark {
+    color: #FFFFFF;
+}
+
+#login-button-label > button > span.light {
+    color: #000000;
 }
