@@ -20,8 +20,9 @@ window.onload = () => {
 
     changeBodyTheme();
 
-    setPasswordVisibility(isPasswordVisible);
-    setPasswordVisibilityVisual(isPasswordVisible);
+    setUsernameWarningState(false);
+    setPasswordWarningState(false);
+    setPasswordVisibilityState(isPasswordVisible);
     setOneWeekCheckboxState(isOneWeekChecked);
 
     changeThemeCircleImage();
@@ -102,8 +103,7 @@ const toggleTheme = function(){
 
     changeBodyTheme();   
 
-    setPasswordVisibility(isPasswordVisible);
-    setPasswordVisibilityVisual(isPasswordVisible);
+    setPasswordVisibilityState(isPasswordVisible);
     setOneWeekCheckboxState(isOneWeekChecked);
 
     changeThemeCircleImage();
@@ -136,7 +136,7 @@ const togglePasswordVisibility = function(){
     setPasswordVisibilityVisual(isPasswordVisible);
 }
 
-const setPasswordVisibility = function(isVisible){    
+const setPasswordVisibilityState = function(isVisible){    
     isPasswordVisible = isVisible;
     setPasswordVisibilityVisual(isVisible);
 }
@@ -177,3 +177,33 @@ const changeThemeCircleImage = function(){
             break;
     }    
 }
+
+const setUsernameWarningState = function(isVisible) {
+    const div = document.querySelector("#username-warning-div");
+    div.style.visibility = isVisible ? 'visible' : 'hidden';    
+}
+
+const listenUsernameInput = function(){
+    const usernameInput = document.querySelector("#username");
+    setUsernameWarningState(usernameInput.value.length === 0)
+}
+
+const setPasswordWarningState = function(isVisible) {
+    const div = document.querySelector("#password-warning-div");
+    div.style.visibility = isVisible ? 'visible' : 'hidden';    
+}
+
+const listenPasswordInput = function(){
+    const passwordInput = document.querySelector("#password");
+    setPasswordWarningState(passwordInput.value.length === 0)
+}
+
+const tryLogin = function(){
+    const usernameInput = document.querySelector("#username");
+    setUsernameWarningState(usernameInput.value.length === 0)
+
+    const passwordInput = document.querySelector("#password");
+    setPasswordWarningState(passwordInput.value.length === 0)
+}
+
+

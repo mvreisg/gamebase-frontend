@@ -17,10 +17,15 @@ if ($parameters === false){
 
 //var_dump($_SERVER);
 
+$hasFoundPage = false;
+
 foreach ($routes as $route => $page) {
     if (strcmp($route, $parameters) === 0) {
+        $hasFoundPage = true;
         require_once __DIR__ . '/views/' . $page;
     }
 }
 
-require_once __DIR__ . '/views/404.php'; 
+if ($hasFoundPage === false){
+    require_once __DIR__ . '/views/404.php'; 
+}

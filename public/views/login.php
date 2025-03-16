@@ -22,7 +22,7 @@
                 <div id="login-balloon-texts">
                     <div class="dark text-input-div">
                         <label class="text-input-label" for="username">
-                            <input id="username" class="dark text-input" name="username" type="text" placeholder="Seu nome de usuário..." required />
+                            <input id="username" class="dark text-input" name="username" type="text" placeholder="Seu nome de usuário..." required onkeyup="listenUsernameInput();" />
                         </label>
                     </div>     
                     <div id="username-warning-div" class="warning-text">
@@ -30,7 +30,7 @@
                     </div>    
                     <div class="dark text-input-div">
                         <label class="text-input-label" for="password">
-                            <input id="password" class="dark text-input" name="password" type="password" placeholder="Sua senha..." required />
+                            <input id="password" class="dark text-input" name="password" type="password" placeholder="Sua senha..." required onkeyup="listenPasswordInput();" />
                         </label>
                         <button type="button" onclick="togglePasswordVisibility();">
                             <img id="password-visibility-indicator" src="./assets/svg/eye-open-white.svg"/>
@@ -48,7 +48,7 @@
                         <span class="dark one-week-reminder-text">Lembrar de mim por uma semana</span>
                     </div>
                     <label id="login-button-label" for="submit" class="dark">
-                        <button id="login-button" name="submit" type="submit">
+                        <button id="login-button" name="submit" type="submit" onclick="tryLogin();">
                             <span class="dark">Entrar</span>                   
                         </button>
                     </label>            
