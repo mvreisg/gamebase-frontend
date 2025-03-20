@@ -1,4 +1,5 @@
 body {    
+    position: relative;
     margin: 0;
 }
 
@@ -8,6 +9,121 @@ body {
 
 .light.background {
     background-color: #DAD3FB;
+}
+
+#login-error-div {
+    position: absolute;
+    z-index: 100;
+    display: flex;   
+    justify-content: center;
+    align-items: center;             
+    width: 100%;
+    height: 100vh;
+    background: rgba(49, 36, 109, 0.2);
+    backdrop-filter: blur(0.25rem);
+}
+
+#login-error-internal-box.dark {
+    background-color: #100E41;
+    border: 0.25rem solid #FF0000;
+}
+
+#login-error-internal-box.light {
+    background-color: #C8BEF9;
+    border: 0.25rem solid #FF0000;
+}
+
+#login-error-internal-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 75%;
+    width: 26.25rem;
+    height: 20rem;
+    background-color: #100E41;
+    border: 0.25rem solid #FF0000;
+    border-radius: 0.75rem;
+    padding: 2.25rem;
+}
+
+#login-error-internal-box > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5625rem;
+}
+
+#login-error-internal-box > div > img {
+    padding: 0.125rem;
+}
+
+#login-error-internal-box-title.dark {
+    color: #FFFFFF;
+}
+
+#login-error-internal-box-title1.light {
+    color: #000000;
+}
+
+#login-error-internal-box-title {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 1.5em;
+    font-weight: 900;
+}
+
+#login-error-internal-box-message-paragraph.dark {
+    color: #FFFFFF;
+}
+
+#login-error-internal-box-message-paragraph.light {
+    color: #000000;
+}
+
+#login-error-internal-box-message-paragraph {
+    text-align: center;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+#login-error-internal-box-button.dark {
+    background-color: #31246D;
+    border: 0.25rem solid #FFFFFF;  
+}
+
+#login-error-internal-box-button.light {
+    background-color: #A294E1;
+    border: 0.25rem solid #000000;  
+}
+
+#login-error-internal-box-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    appearance: none;  
+    border-radius: 0.75rem;
+    width: 100%;
+    height: 3.75rem;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#login-error-internal-box-button-span.dark {
+    color: #FFFFFF;
+}
+
+#login-error-internal-box-button-span.light {
+    color: #000000;
+}
+
+#login-error-internal-box-button-span {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 #login-balloon-container {

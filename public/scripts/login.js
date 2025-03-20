@@ -20,6 +20,7 @@ window.onload = () => {
 
     changeBodyTheme();
 
+    setErrorMessageBoxVisibility(false);
     setUsernameWarningState(false);
     setPasswordWarningState(false);
     setPasswordVisibilityState(isPasswordVisible);
@@ -81,6 +82,12 @@ const changeBodyTheme = function(){
 
     const loginButtonSpan = document.querySelector("#login-button-label>button>span");
     loginButtonSpan.classList = changeThemeClasses(loginButtonSpan);
+
+    const loginErrorInternalBox = document.querySelector("#login-error-internal-box");
+    loginErrorInternalBox.classList = changeThemeClasses(loginErrorInternalBox);
+
+    const loginErrorInternalBoxTitle = document.querySelector("#login-error-internal-box-title");
+    loginErrorInternalBoxTitle.classList = changeThemeClasses(loginErrorInternalBoxTitle);
 }
 
 const setTheme = function(themeToChangeTo){
@@ -108,6 +115,24 @@ const toggleTheme = function(){
     setOneWeekCheckboxState(isOneWeekChecked);
 
     changeThemeCircleImage();
+}
+
+const setErrorMessageBoxVisibility = function(isVisible){
+    const div = document.querySelector("#login-error-div");
+    div.style.display = isVisible ? 'flex' : 'none';
+}
+
+const closeErrorMessageBox = function(event){    
+    const element = event.target;
+    switch(element.id){
+        case 'login-error-div':
+        case 'login-error-internal-box-button':
+        case 'login-error-internal-box-button-span':
+            setErrorMessageBoxVisibility(false);
+            break;
+        default:
+            break;
+    }
 }
 
 const toggleOneWeekCheckboxState = function(){ 
@@ -199,12 +224,50 @@ const listenPasswordInput = function(){
     setPasswordWarningState(passwordInput.value.length === 0)
 }
 
-const tryLogin = function(){
+const tryLogin = async function(){
     const usernameInput = document.querySelector("#username");
-    setUsernameWarningState(usernameInput.value.length === 0)
-
     const passwordInput = document.querySelector("#password");
-    setPasswordWarningState(passwordInput.value.length === 0)
+    const oneWeekInput = document.querySelector("#one-week-checkbox");
+
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    const oneWeek = oneWeekInput.checked;
+
+    if (username.length === 0){
+        setUsernameWarningState(true);
+    }
+
+    if (password.length === 0){
+        setPasswordWarningState(true)
+    }
+
+    if (username.length === 0 || password.length === 0){
+        return;
+    }    
+
+    const body = {
+        "username": username,
+        "password": password,
+        "oneWeek": oneWeek
+    };
+
+    console.log(body);
+
+    const response = await fetch('http://localhost:80/auth/login', {
+        body: JSON.stringify(body),
+        method: 'POST',        
+        headers: {
+            'Content-Type': 'application/json'
+        }      
+    });
+
+    const status = await response.status;
+    const json = await response.json();
+
+    if (status !== 200){
+        setErrorMessageBoxVisibility(true);
+        return;
+    }
+
+    console.log(json);
 }
-
-

@@ -9,8 +9,24 @@
         <script type="text/javascript" src="./../scripts/login.js"></script>
     </head>
     <body class="dark background">
+        <div id="login-error-div" onclick="closeErrorMessageBox(event);">
+            <div id="login-error-internal-box" class="dark">
+                <div>
+                    <img src="./../assets/svg/red-warning-icon.svg" />
+                    <h1 id="login-error-internal-box-title" class="dark">Ocorreu um erro!</h1>
+                </div>
+                <p id="login-error-internal-box-message-paragraph" class="dark">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur purus justo, vestibulum nec diam eu, lacinia sollicitudin sem. In mauris eros, scelerisque eu est sit amet, ornare commodo lacus.
+                </p>
+                <button id="login-error-internal-box-button" class="dark">
+                    <span id="login-error-internal-box-button-span" class="dark">
+                        Entendi!
+                    </span>
+                </button>
+            </div>
+        </div>
         <div id="login-balloon-container">
-            <form id="login-balloon-box" class="dark" method="POST">                
+            <form id="login-balloon-box" class="dark">                
                 <h1 id="title" class="dark">Gamebase</h1>  
                 <div id="theme-toggler-div">
                     <div id="theme-toggler-bar" class="dark">
@@ -48,7 +64,7 @@
                         <span id="one-week-reminder-text" class="dark">Lembrar de mim por uma semana</span>
                     </div>
                     <label id="login-button-label" for="submit" class="dark">
-                        <button id="login-button" name="submit" type="submit" onclick="tryLogin();">
+                        <button id="login-button" name="submit" type="button" onclick="tryLogin();">
                             <span class="dark">Entrar</span>                   
                         </button>
                     </label>            
