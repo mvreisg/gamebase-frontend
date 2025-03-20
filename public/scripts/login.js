@@ -88,6 +88,15 @@ const changeBodyTheme = function(){
 
     const loginErrorInternalBoxTitle = document.querySelector("#login-error-internal-box-title");
     loginErrorInternalBoxTitle.classList = changeThemeClasses(loginErrorInternalBoxTitle);
+
+    const loginErrorInternalBoxMessageParagraph = document.querySelector("#login-error-internal-box-message-paragraph");
+    loginErrorInternalBoxMessageParagraph.classList = changeThemeClasses(loginErrorInternalBoxMessageParagraph);
+
+    const loginErrorInternalBoxButton = document.querySelector("#login-error-internal-box-button");
+    loginErrorInternalBoxButton.classList = changeThemeClasses(loginErrorInternalBoxButton);
+
+    const loginErrorInternalBoxButtonSpan = document.querySelector("#login-error-internal-box-button-span");
+    loginErrorInternalBoxButtonSpan.classList = changeThemeClasses(loginErrorInternalBoxButtonSpan)
 }
 
 const setTheme = function(themeToChangeTo){
@@ -265,9 +274,9 @@ const tryLogin = async function(){
     const json = await response.json();
 
     if (status !== 200){
+        const p = document.querySelector("#login-error-internal-box-message-paragraph");
+        p.innerHTML = json['message'];
         setErrorMessageBoxVisibility(true);
         return;
     }
-
-    console.log(json);
 }
