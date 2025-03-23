@@ -31,6 +31,14 @@ window.onload = () => {
 
     changeThemeCircleImage();
     changeLoadingImage();
+
+    document.querySelector("#theme-toggler-input").focus();
+
+    document.querySelector("#theme-toggler-input").addEventListener("keydown", function(event) {
+        if (event.code === "Space"){
+            toggleTheme();
+        }
+    });
 }
 
 const changeThemeClasses = function(element){

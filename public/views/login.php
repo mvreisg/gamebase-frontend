@@ -28,8 +28,11 @@
         <div id="login-balloon-container">
             <form id="login-balloon-box" class="dark">                
                 <h1 id="title" class="dark">Gamebase</h1>  
-                <div id="theme-toggler-div">
+                <div id="theme-toggler-div">                    
                     <div id="theme-toggler-bar" class="dark">
+                        <label for="theme-toggler-input">
+                            <input name="theme-toggler-input" id="theme-toggler-input" type="checkbox" />
+                        </label>
                         <div id="theme-toggler-circle" class="dark" onclick="toggleTheme();">
                             <img src="./../assets/svg/sun-light.svg" />
                         </div>
