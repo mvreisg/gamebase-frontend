@@ -10,7 +10,7 @@
     </head>
     <body class="dark background">
         <div id="login-error-div" onclick="closeErrorMessageBox(event);">
-            <div id="login-error-internal-box" class="dark">
+            <form id="login-error-internal-box" class="dark">
                 <div>
                     <img src="./../assets/svg/red-warning-icon.svg" />
                     <h1 id="login-error-internal-box-title" class="dark">Ocorreu um erro!</h1>
@@ -18,12 +18,12 @@
                 <p id="login-error-internal-box-message-paragraph" class="dark">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur purus justo, vestibulum nec diam eu, lacinia sollicitudin sem. In mauris eros, scelerisque eu est sit amet, ornare commodo lacus.
                 </p>
-                <button id="login-error-internal-box-button" class="dark">
+                <button id="login-error-internal-box-button" class="dark" type="button">
                     <span id="login-error-internal-box-button-span" class="dark">
                         Entendi!
                     </span>
                 </button>
-            </div>
+            </form>
         </div>
         <div id="login-balloon-container">
             <form id="login-balloon-box" class="dark">                

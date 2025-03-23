@@ -146,7 +146,7 @@ const setLoginButtonClickedVisibility = function(isVisible){
 
 const setErrorMessageBoxVisibility = function(isVisible){
     const div = document.querySelector("#login-error-div");
-    div.style.display = isVisible ? 'flex' : 'none';
+    div.style.display = isVisible ? 'flex' : 'none';    
 }
 
 const closeErrorMessageBox = function(event){    
@@ -314,6 +314,7 @@ const tryLogin = async function(){
         const p = document.querySelector("#login-error-internal-box-message-paragraph");
         p.innerHTML = json['message'];
         setErrorMessageBoxVisibility(true);
+        document.querySelector("#login-error-internal-box-button").focus();
         isLoginButtonPressed = false;
         loginButton.disabled = false;
         setLoginButtonClickedVisibility(false);
