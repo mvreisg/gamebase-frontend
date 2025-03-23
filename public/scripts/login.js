@@ -305,22 +305,35 @@ const tryLogin = async function(){
         "oneWeek": oneWeek
     };
 
-    console.log(body);
+    let status = null;
 
-    const response = await fetch('http://localhost:80/auth/login', {
-        body: JSON.stringify(body),
-        method: 'POST',        
-        headers: {
-            'Content-Type': 'application/json'
-        }      
-    });
-
-    const status = await response.status;
-    const json = await response.json();    
-
-    if (status !== 200){
+    try{
+        const response = await fetch('http://localhost:80/auth/login', {
+            body: JSON.stringify(body),
+            method: 'POST',        
+            headers: {
+                'Content-Type': 'application/json'
+            }      
+        });
+    
+        status = await response.status;
+        const json = await response.json();    
+    
+        if (status !== 200){
+            const p = document.querySelector("#login-error-internal-box-message-paragraph");
+            p.innerHTML = json['message'];
+            setErrorMessageBoxVisibility(true);
+            document.querySelector("#login-error-internal-box-button").focus();
+            isLoginButtonPressed = false;
+            loginButton.disabled = false;
+            setLoginButtonClickedVisibility(false);
+            setLoginButtonNotClickedVisibility(true);
+            return;
+        }
+    }
+    catch {
         const p = document.querySelector("#login-error-internal-box-message-paragraph");
-        p.innerHTML = json['message'];
+        p.innerHTML = 'Erro ao estabelecer conexão com o servidor.';
         setErrorMessageBoxVisibility(true);
         document.querySelector("#login-error-internal-box-button").focus();
         isLoginButtonPressed = false;
@@ -329,4 +342,5 @@ const tryLogin = async function(){
         setLoginButtonNotClickedVisibility(true);
         return;
     }
+    
 }
