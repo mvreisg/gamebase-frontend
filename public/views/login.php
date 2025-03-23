@@ -63,9 +63,15 @@
                         </label>
                         <span id="one-week-reminder-text" class="dark">Lembrar de mim por uma semana</span>
                     </div>
-                    <label id="login-button-label" for="submit" class="dark">
-                        <button id="login-button" name="submit" type="button" onclick="tryLogin();">
-                            <span class="dark">Entrar</span>                   
+                    <label id="login-button-label" for="submit">
+                        <button id="login-button" name="submit" type="button" onclick="tryLogin();" class="dark">
+                            <div id="login-button-not-clicked-status">
+                                <span class="dark">Entrar</span>
+                            </div>                            
+                            <div id="login-button-clicked-status">
+                                <img src="./../assets/svg/loading-dark.svg" />
+                                <span class="dark">Entrando...</span>
+                            </div>                  
                         </button>
                     </label>            
                 </div>                                     

@@ -4,6 +4,7 @@ let passwordVisibilityIndicatorImage = null;
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
 let theme = null;
+let isLoginButtonPressed = false;
 const prefix = './../assets/svg/';
 const suffix = '.svg'
 
@@ -20,6 +21,8 @@ window.onload = () => {
 
     changeBodyTheme();
 
+    setLoginButtonClickedVisibility(false);
+    setLoginButtonNotClickedVisibility(true);
     setErrorMessageBoxVisibility(false);
     setUsernameWarningState(false);
     setPasswordWarningState(false);
@@ -27,6 +30,7 @@ window.onload = () => {
     setOneWeekCheckboxState(isOneWeekChecked);
 
     changeThemeCircleImage();
+    changeLoadingImage();
 }
 
 const changeThemeClasses = function(element){
@@ -77,11 +81,14 @@ const changeBodyTheme = function(){
     const passwordField = document.querySelector("#password");
     passwordField.classList = changeThemeClasses(passwordField);
 
-    const loginButtonLabel = document.querySelector("#login-button-label");
-    loginButtonLabel.classList = changeThemeClasses(loginButtonLabel);
+    const loginButton = document.querySelector("#login-button");
+    loginButton.classList = changeThemeClasses(loginButton);
 
-    const loginButtonSpan = document.querySelector("#login-button-label>button>span");
-    loginButtonSpan.classList = changeThemeClasses(loginButtonSpan);
+    const loginButtonNotClickedSpan = document.querySelector("#login-button-not-clicked-status>span");
+    loginButtonNotClickedSpan.classList = changeThemeClasses(loginButtonNotClickedSpan);
+
+    const loginButtonClickedSpan = document.querySelector("#login-button-clicked-status>span");
+    loginButtonClickedSpan.classList = changeThemeClasses(loginButtonClickedSpan);
 
     const loginErrorInternalBox = document.querySelector("#login-error-internal-box");
     loginErrorInternalBox.classList = changeThemeClasses(loginErrorInternalBox);
@@ -124,6 +131,17 @@ const toggleTheme = function(){
     setOneWeekCheckboxState(isOneWeekChecked);
 
     changeThemeCircleImage();
+    changeLoadingImage();
+}
+
+const setLoginButtonNotClickedVisibility = function(isVisible){
+    const div = document.querySelector("#login-button-not-clicked-status");
+    div.style.display = isVisible ? 'flex' : 'none';
+}
+
+const setLoginButtonClickedVisibility = function(isVisible){
+    const div = document.querySelector("#login-button-clicked-status");
+    div.style.display = isVisible ? 'flex' : 'none';
 }
 
 const setErrorMessageBoxVisibility = function(isVisible){
@@ -213,6 +231,18 @@ const changeThemeCircleImage = function(){
     }    
 }
 
+const changeLoadingImage = function(){
+    const img = document.querySelector("#login-button-clicked-status>img");
+    switch(theme){
+        case 'dark':
+            img.setAttribute("src", prefix + "loading-dark" + suffix);
+            break;
+        case 'light':
+            img.setAttribute("src", prefix + "loading-light" + suffix);
+            break;
+    }    
+}
+
 const setUsernameWarningState = function(isVisible) {
     const div = document.querySelector("#username-warning-div");
     div.style.visibility = isVisible ? 'visible' : 'hidden';    
@@ -252,7 +282,14 @@ const tryLogin = async function(){
 
     if (username.length === 0 || password.length === 0){
         return;
-    }    
+    }
+
+    isLoginButtonPressed = true;    
+
+    const loginButton = document.querySelector("#login-button");
+    loginButton.disabled = true;
+    setLoginButtonClickedVisibility(true);
+    setLoginButtonNotClickedVisibility(false);
 
     const body = {
         "username": username,
@@ -271,12 +308,16 @@ const tryLogin = async function(){
     });
 
     const status = await response.status;
-    const json = await response.json();
+    const json = await response.json();    
 
     if (status !== 200){
         const p = document.querySelector("#login-error-internal-box-message-paragraph");
         p.innerHTML = json['message'];
         setErrorMessageBoxVisibility(true);
+        isLoginButtonPressed = false;
+        loginButton.disabled = false;
+        setLoginButtonClickedVisibility(false);
+        setLoginButtonNotClickedVisibility(true);
         return;
     }
 }
