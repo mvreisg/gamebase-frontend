@@ -4,7 +4,6 @@ let passwordVisibilityIndicatorImage = null;
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
 let theme = null;
-let isLoginButtonPressed = false;
 const prefix = './../assets/svg/';
 const suffix = '.svg'
 
@@ -162,8 +161,9 @@ const closeErrorMessageBox = function(event){
     switch(element.id){
         case 'login-error-div':
         case 'login-error-internal-box-button':
-        case 'login-error-internal-box-button-span':
+        case 'login-error-internal-box-button-span':            
             setErrorMessageBoxVisibility(false);
+            setIfLoginButtonIsDisabled(false);
             break;
         default:
             break;
@@ -253,7 +253,12 @@ const changeLoadingImage = function(){
 
 const setUsernameWarningState = function(isVisible) {
     const div = document.querySelector("#username-warning-div");
-    div.style.visibility = isVisible ? 'visible' : 'hidden';    
+    div.style.visibility = isVisible ? 'visible' : 'hidden';        
+}
+
+const setUsernameWarningText = function(message){
+    const p = document.querySelector("#username-warning-div>p");
+    p.innerHTML = message;
 }
 
 const listenUsernameInput = function(){
@@ -266,9 +271,29 @@ const setPasswordWarningState = function(isVisible) {
     div.style.visibility = isVisible ? 'visible' : 'hidden';    
 }
 
+const setPasswordWarningText = function(message){
+    const p = document.querySelector("#password-warning-div>p");
+    p.innerHTML = message;
+}
+
 const listenPasswordInput = function(){
     const passwordInput = document.querySelector("#password");
     setPasswordWarningState(passwordInput.value.length === 0)
+}
+
+const setIfLoginButtonIsDisabled = function(isDisabled) {
+    const loginButton = document.querySelector("#login-button");
+    loginButton.disabled = isDisabled;
+}
+
+const showErrorMessageBox = function(message){
+    const p = document.querySelector("#login-error-internal-box-message-paragraph");
+    p.innerHTML = message;
+    setErrorMessageBoxVisibility(true);
+    document.querySelector("#login-error-internal-box-button").focus();
+    setIfLoginButtonIsDisabled(false);
+    setLoginButtonClickedVisibility(false);
+    setLoginButtonNotClickedVisibility(true);
 }
 
 const tryLogin = async function(){
@@ -279,23 +304,36 @@ const tryLogin = async function(){
     const username = usernameInput.value;
     const password = passwordInput.value;
     const oneWeek = oneWeekInput.checked;
+    
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
 
-    if (username.length === 0){
+    usernameInput.value = trimmedUsername;
+    passwordInput.value = trimmedPassword;
+
+    if (trimmedUsername.length === 0 && username.length > 0){        
+        setUsernameWarningText('Nome de usuário inválido!');
+        setUsernameWarningState(true);
+    }
+    else if (trimmedUsername.length === 0){        
+        setUsernameWarningText('Insira um nome de usuário!');
         setUsernameWarningState(true);
     }
 
-    if (password.length === 0){
-        setPasswordWarningState(true)
+    if (trimmedPassword.length === 0 && password.length > 0){
+        setPasswordWarningText('Senha inválida!');
+        setPasswordWarningState(true);
+    }
+    else if (trimmedPassword.length === 0){
+        setPasswordWarningText('Insira uma senha!');
+        setPasswordWarningState(true);
     }
 
-    if (username.length === 0 || password.length === 0){
+    if (trimmedUsername.length === 0 || trimmedPassword.length === 0){
         return;
     }
 
-    isLoginButtonPressed = true;    
-
-    const loginButton = document.querySelector("#login-button");
-    loginButton.disabled = true;
+    setIfLoginButtonIsDisabled(true);
     setLoginButtonClickedVisibility(true);
     setLoginButtonNotClickedVisibility(false);
 
@@ -304,9 +342,7 @@ const tryLogin = async function(){
         "password": password,
         "oneWeek": oneWeek
     };
-
-    let status = null;
-
+    
     try{
         const response = await fetch('http://localhost:80/auth/login', {
             body: JSON.stringify(body),
@@ -315,32 +351,16 @@ const tryLogin = async function(){
                 'Content-Type': 'application/json'
             }      
         });
-    
-        status = await response.status;
-        const json = await response.json();    
-    
+
+        const status = response.status;
+
         if (status !== 200){
-            const p = document.querySelector("#login-error-internal-box-message-paragraph");
-            p.innerHTML = json['message'];
-            setErrorMessageBoxVisibility(true);
-            document.querySelector("#login-error-internal-box-button").focus();
-            isLoginButtonPressed = false;
-            loginButton.disabled = false;
-            setLoginButtonClickedVisibility(false);
-            setLoginButtonNotClickedVisibility(true);
-            return;
+            const json = await response.json();
+            const message = json['message'];
+            showErrorMessageBox(message);
         }
     }
     catch {
-        const p = document.querySelector("#login-error-internal-box-message-paragraph");
-        p.innerHTML = 'Erro ao estabelecer conexão com o servidor.';
-        setErrorMessageBoxVisibility(true);
-        document.querySelector("#login-error-internal-box-button").focus();
-        isLoginButtonPressed = false;
-        loginButton.disabled = false;
-        setLoginButtonClickedVisibility(false);
-        setLoginButtonNotClickedVisibility(true);
-        return;
-    }
-    
+        showErrorMessageBox('Erro ao estabelecer conexão com o servidor.');
+    }         
 }
