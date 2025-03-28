@@ -1,32 +1,37 @@
 const data = [
     {
-        'route': '/',
+        'routes': [
+            '/',
+            '/login'
+        ],
         'title': 'Gamebase - Login',
         'scripts': [
-            './scripts/login.js'
+            {
+                'path': './scripts/login.js',
+                'isModule': true
+            }            
         ],
         'stylesheets': [
-            './styles/login.css'
+            {
+                'path': './styles/login.css'
+            }            
         ]
     },
     {
-        'route': '/login',
-        'title': 'Gamebase - Login',
-        'scripts': [
-            './scripts/login.js'
+        'routes': [
+            '/home'
         ],
-        'stylesheets': [
-            './styles/login.css'
-        ]
-    },
-    {
-        'route': '/home',
         'title': 'Gamebase - Home',
         'scripts': [
-            './scripts/home.js'
+            {
+                'path': './scripts/home.js',
+                'isModule': false
+            }            
         ],
         'stylesheets': [
-            './styles/home.css'
+            {
+                'path': './styles/home.css'
+            }
         ]
     }
 ]
@@ -37,10 +42,13 @@ const createTitle = (text) => {
     document.head.appendChild(title);
 }
 
-const createScript = (path) => {
+const createScript = (path, isModule = false) => {
     const script = document.createElement("script");
     script.src = path;
     script.type = "text/javascript";
+    if (isModule){
+        script.type = 'module';
+    }
     document.head.appendChild(script);
 }
 
@@ -60,21 +68,23 @@ const navigateTo = (route, params) => {
 const fetchRoute = (data, route, params) => {
     createTitle(data.title);
     data.scripts.forEach((script) => {
-        createScript(script);
+        createScript(script.path, script.isModule);
     });
     data.stylesheets.forEach((stylesheet) => {
-        createStylesheet(stylesheet);
+        createStylesheet(stylesheet.path);
     });
 }
 
 window.addEventListener('load', () => {
     let found = false;
-    for (let value of data){    
-        if (value.route === window.location.pathname){
-            found = true;
-            fetchRoute(value, window.location.pathname, window.location.search);
-            break;
-        }
+    for (let value of data){   
+        for (let route of value.routes){
+            if (route === window.location.pathname){
+                found = true;
+                fetchRoute(value, window.location.pathname, window.location.search);
+                break;
+            }
+        }         
     };   
 
     if (found) return;

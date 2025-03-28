@@ -1,20 +1,27 @@
-let oneWeekLabel = null;    
-let oneWeekInput = null;
-let passwordVisibilityIndicatorImage = null;
+import { 
+    changeBodyTheme, 
+    changeThemeClasses, 
+    getTheme, 
+    setTheme, 
+    startTheme, 
+    state as themeState
+} from './themes.js';
+
+import {
+    loadSvgToUrl
+} from './svg.js';
+
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
-let theme = null;
-const prefix = './../assets/svg/';
-const suffix = '.svg'
 
-const start = async () => {    
+(async () => {    
     const response = await fetch('./views/login.html');
     const text = await response.text();        
     document.querySelector('#app').innerHTML = text;
 
     const token = localStorage.getItem('token');
     if (token !== null){
-        body = {
+        const body = {
             'token': token
         };
         fetch('http://localhost:80/auth/validate', {
@@ -37,19 +44,10 @@ const start = async () => {
             }).then(data => {
                 showErrorMessageBox(error.message);
             });
-        });
+        });        
     }
-                 
-    oneWeekLabel = document.querySelector("#one-week-checkbox-label");    
-    oneWeekInput = document.querySelector("#one-week-checkbox-label>input");    
-    passwordVisibilityIndicatorImage = document.querySelector("#password-visibility-indicator");
-
-    theme = localStorage.getItem('theme');
-
-    if (theme === null){
-        setTheme('dark');
-        changeBodyTheme();
-    }    
+             
+    startTheme();
 
     setLoginButtonClickedVisibility(false);
     setLoginButtonNotClickedVisibility(true);
@@ -62,55 +60,30 @@ const start = async () => {
     changeThemeCircleImage();
     changeLoadingImage();
 
-    document.querySelector("#theme-toggler-input").focus();
-
-    document.querySelector("#theme-toggler-input").addEventListener("keydown", function(event) {
+    const themeTogglerInput = document.querySelector("#theme-toggler-input");
+    themeTogglerInput.focus();
+    themeTogglerInput.addEventListener("keydown", function(event) {
         if (event.code === "Space"){
             toggleTheme();
         }
     });
-};
 
-start();
+    document.querySelector("#theme-toggler-circle").addEventListener('click', () => toggleTheme());
 
-const changeThemeClasses = function(element){
-    const classList = element.classList;
-    switch(theme){
-        case 'dark':
-            if (classList.contains('light')){
-                classList.remove('light');
-                classList.add('dark');
-            }                        
-            break;
-        case 'light':
-            if (classList.contains('dark')){
-                classList.remove('dark');
-                classList.add('light');
-            }
-            break;
-    }    
-    return classList;
-}
+    document.querySelector("#username").addEventListener('keyup', () => listenUsernameInput());
+    document.querySelector("#password").addEventListener('keyup', () => listenPasswordInput());
 
-const changeBodyTheme = function(){
-    const elements = document.querySelectorAll('*');
+    document.querySelector("#password-visibility-toggler-button").addEventListener('click', () => togglePasswordVisibility());
 
-    elements.forEach((element) => {
-        changeThemeClasses(element);
-    })
-}
+    document.querySelector("#one-week-checkbox").addEventListener('click', () => toggleOneWeekCheckboxState());
 
-const setTheme = function(themeToChangeTo){
-    localStorage.setItem('theme', themeToChangeTo);
-    theme = themeToChangeTo;
-}
+    document.querySelector("#login-button").addEventListener('click', () => tryLogin());
 
-const getTheme = function(){
-    localStorage.getItem('theme');
-}
+    document.querySelector("#login-error-div").addEventListener('click', (event) => closeErrorMessageBox(event));
+})();
 
 const toggleTheme = function(){
-    switch(theme){
+    switch(themeState.theme){
         case 'dark': 
             setTheme('light');           
             break;
@@ -164,12 +137,12 @@ const toggleOneWeekCheckboxState = function(){
 
 const setOneWeekCheckboxState = function(isChecked){ 
     isOneWeekChecked = isChecked;
-    oneWeekInput.checked = isChecked;
+    document.querySelector("#one-week-checkbox-label>input").checked = isChecked;
     setOneWeekCheckboxVisual(isChecked);
 }
 
 const setOneWeekCheckboxVisual = function(isChecked){
-    const classList = oneWeekLabel.classList;
+    const classList = document.querySelector("#one-week-checkbox-label").classList;
     if (isChecked){
         classList.remove('unchecked');
         classList.add('checked');
@@ -189,51 +162,52 @@ const setPasswordVisibilityState = function(isVisible){
     setPasswordVisibilityVisual(isVisible);
 }
 
-const setPasswordVisibilityVisual = function(isVisible){            
+const setPasswordVisibilityVisual = async function(isVisible){ 
+    const passwordVisibilityIndicatorImage = document.querySelector("#password-visibility-indicator");           
     const passwordInput = document.querySelector("#password");
     if (isVisible){
-        passwordInput.setAttribute("type", "text");
-        switch(theme){
-            case 'light':
-                passwordVisibilityIndicatorImage.setAttribute("src", prefix + "eye-dashed-light" + suffix);
+        passwordInput.type = 'text';
+        switch(themeState.theme){
+            case 'light':                
+                passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-dashed-light');
                 break;
             case 'dark':
-                passwordVisibilityIndicatorImage.setAttribute("src", prefix + "eye-dashed-dark" + suffix);
+                passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-dashed-dark');       
                 break;
         }
     } else {
-        passwordInput.setAttribute("type", "password");
-        switch(theme){
-            case 'light':
-                passwordVisibilityIndicatorImage.setAttribute("src", prefix + "eye-open-light" + suffix);
+        passwordInput.type = 'password';
+        switch(themeState.theme){
+            case 'light':                
+                passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-open-light');;
                 break;
-            case 'dark':
-                passwordVisibilityIndicatorImage.setAttribute("src", prefix + "eye-open-dark" + suffix);
+            case 'dark':                
+                passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-open-dark');
                 break;
-        }        
+        }      
     }
 }
 
-const changeThemeCircleImage = function(){
+const changeThemeCircleImage = async function(){
     const img = document.querySelector("#theme-toggler-circle>img");
-    switch(theme){
+    switch(themeState.theme){
         case 'dark':
-            img.setAttribute("src", prefix + "sun-light" + suffix);
+            img.src = await loadSvgToUrl('sun-light');
             break;
         case 'light':
-            img.setAttribute("src", prefix + "moon-dark" + suffix);
+            img.src = await loadSvgToUrl('moon-dark');
             break;
     }    
 }
 
-const changeLoadingImage = function(){
+const changeLoadingImage = async function(){
     const img = document.querySelector("#login-button-clicked-status>img");
-    switch(theme){
+    switch(themeState.theme){
         case 'dark':
-            img.setAttribute("src", prefix + "loading-dark" + suffix);
+            img.src = await loadSvgToUrl('loading-dark');
             break;
         case 'light':
-            img.setAttribute("src", prefix + "loading-light" + suffix);
+            img.src = await loadSvgToUrl('loading-light');
             break;
     }    
 }
@@ -286,11 +260,11 @@ const showErrorMessageBox = function(message){
 const tryLogin = async function(){
     const usernameInput = document.querySelector("#username");
     const passwordInput = document.querySelector("#password");
-    const oneWeekInput = document.querySelector("#one-week-checkbox");
+    const oneWeekCheckbox = document.querySelector("#one-week-checkbox");
 
     const username = usernameInput.value;
     const password = passwordInput.value;
-    const oneWeek = oneWeekInput.checked;
+    const oneWeek = oneWeekCheckbox.checked;
     
     const trimmedUsername = username.trim();
     const trimmedPassword = password.trim();
@@ -345,7 +319,8 @@ const tryLogin = async function(){
             const json = await response.json();
             const message = json['message'];
             showErrorMessageBox(message);
-        }
+            return;
+        }        
 
         const json = await response.json();
 
@@ -353,7 +328,7 @@ const tryLogin = async function(){
 
         navigateTo('/home', '');        
     }
-    catch {
+    catch {        
         showErrorMessageBox('Erro ao estabelecer conexão com o servidor.');
     }         
 }
