@@ -7,18 +7,49 @@ let theme = null;
 const prefix = './../assets/svg/';
 const suffix = '.svg'
 
-window.onload = () => {
+const start = async () => {    
+    const response = await fetch('./views/login.html');
+    const text = await response.text();        
+    document.querySelector('#app').innerHTML = text;
+
+    const token = localStorage.getItem('token');
+    if (token !== null){
+        body = {
+            'token': token
+        };
+        fetch('http://localhost:80/auth/validate', {
+            method: 'POST', 
+            body: JSON.stringify(body)
+        }).then(data => {
+            if (!data.ok){
+                return data.json().then(error => { throw error; });
+            }
+            if (data.status === 200){
+                return data.json();                                
+            }
+        })
+        .then(json => {            
+            navigateTo('/home', '');                        
+        })
+        .catch(error => {                         
+            fetch('http://localhost:80/auth/logoff', {
+                method: 'POST', body: body
+            }).then(data => {
+                showErrorMessageBox(error.message);
+            });
+        });
+    }
+                 
     oneWeekLabel = document.querySelector("#one-week-checkbox-label");    
-    oneWeekInput = oneWeekLabel.querySelector("input");    
+    oneWeekInput = document.querySelector("#one-week-checkbox-label>input");    
     passwordVisibilityIndicatorImage = document.querySelector("#password-visibility-indicator");
 
     theme = localStorage.getItem('theme');
 
     if (theme === null){
         setTheme('dark');
-    }
-
-    changeBodyTheme();
+        changeBodyTheme();
+    }    
 
     setLoginButtonClickedVisibility(false);
     setLoginButtonNotClickedVisibility(true);
@@ -38,79 +69,35 @@ window.onload = () => {
             toggleTheme();
         }
     });
-}
+};
+
+start();
 
 const changeThemeClasses = function(element){
     const classList = element.classList;
     switch(theme){
         case 'dark':
-            classList.remove('light');
-            classList.add('dark');
+            if (classList.contains('light')){
+                classList.remove('light');
+                classList.add('dark');
+            }                        
             break;
         case 'light':
-            classList.remove('dark');
-            classList.add('light');
+            if (classList.contains('dark')){
+                classList.remove('dark');
+                classList.add('light');
+            }
             break;
     }    
     return classList;
 }
 
 const changeBodyTheme = function(){
-    const body = document.querySelector('body');     
-    body.classList = changeThemeClasses(body);
+    const elements = document.querySelectorAll('*');
 
-    const title = document.querySelector("#title");
-    title.classList = changeThemeClasses(title);
-
-    const loginBalloonBox = document.querySelector('#login-balloon-box'); 
-    loginBalloonBox.classList = changeThemeClasses(loginBalloonBox);
-
-    const themeTogglerBar = document.querySelector("#theme-toggler-bar");
-    themeTogglerBar.classList = changeThemeClasses(themeTogglerBar);
-    
-    const themeTogglerCircle = document.querySelector("#theme-toggler-circle");    
-    themeTogglerCircle.classList = changeThemeClasses(themeTogglerCircle);
-
-    const textInputs = document.querySelectorAll('.text-input-div');
-    textInputs.forEach((value) => {
-        value.classList = changeThemeClasses(value);
-    });
-    
-    const oneWeekCheckboxLabel = document.querySelector('#one-week-checkbox-label');
-    oneWeekCheckboxLabel.classList = changeThemeClasses(oneWeekCheckboxLabel);
-
-    const oneWeekReminderSpan = document.querySelector('#one-week-reminder-text');
-    oneWeekReminderSpan.classList = changeThemeClasses(oneWeekReminderSpan);
-
-    const usernameField = document.querySelector("#username");
-    usernameField.classList = changeThemeClasses(usernameField);
-
-    const passwordField = document.querySelector("#password");
-    passwordField.classList = changeThemeClasses(passwordField);
-
-    const loginButton = document.querySelector("#login-button");
-    loginButton.classList = changeThemeClasses(loginButton);
-
-    const loginButtonNotClickedSpan = document.querySelector("#login-button-not-clicked-status>span");
-    loginButtonNotClickedSpan.classList = changeThemeClasses(loginButtonNotClickedSpan);
-
-    const loginButtonClickedSpan = document.querySelector("#login-button-clicked-status>span");
-    loginButtonClickedSpan.classList = changeThemeClasses(loginButtonClickedSpan);
-
-    const loginErrorInternalBox = document.querySelector("#login-error-internal-box");
-    loginErrorInternalBox.classList = changeThemeClasses(loginErrorInternalBox);
-
-    const loginErrorInternalBoxTitle = document.querySelector("#login-error-internal-box-title");
-    loginErrorInternalBoxTitle.classList = changeThemeClasses(loginErrorInternalBoxTitle);
-
-    const loginErrorInternalBoxMessageParagraph = document.querySelector("#login-error-internal-box-message-paragraph");
-    loginErrorInternalBoxMessageParagraph.classList = changeThemeClasses(loginErrorInternalBoxMessageParagraph);
-
-    const loginErrorInternalBoxButton = document.querySelector("#login-error-internal-box-button");
-    loginErrorInternalBoxButton.classList = changeThemeClasses(loginErrorInternalBoxButton);
-
-    const loginErrorInternalBoxButtonSpan = document.querySelector("#login-error-internal-box-button-span");
-    loginErrorInternalBoxButtonSpan.classList = changeThemeClasses(loginErrorInternalBoxButtonSpan)
+    elements.forEach((element) => {
+        changeThemeClasses(element);
+    })
 }
 
 const setTheme = function(themeToChangeTo){
@@ -359,6 +346,12 @@ const tryLogin = async function(){
             const message = json['message'];
             showErrorMessageBox(message);
         }
+
+        const json = await response.json();
+
+        localStorage.setItem('token', json.token);
+
+        navigateTo('/home', '');        
     }
     catch {
         showErrorMessageBox('Erro ao estabelecer conexão com o servidor.');

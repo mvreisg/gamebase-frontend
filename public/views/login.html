@@ -1,0 +1,73 @@
+<div id="container" class="dark">    
+    <div id="login-error-div" onclick="closeErrorMessageBox(event);">
+        <form id="login-error-internal-box" class="dark">
+            <div>
+                <img src="./../assets/svg/red-warning-icon.svg" />
+                <h1 id="login-error-internal-box-title" class="dark">Ocorreu um erro!</h1>
+            </div>
+            <p id="login-error-internal-box-message-paragraph" class="dark">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur purus justo, vestibulum nec diam eu, lacinia sollicitudin sem. In mauris eros, scelerisque eu est sit amet, ornare commodo lacus.
+            </p>
+            <button id="login-error-internal-box-button" class="dark" type="button">
+                <span id="login-error-internal-box-button-span" class="dark">
+                    Entendi!
+                </span>
+            </button>
+        </form>
+    </div>
+    <div id="login-balloon-container">
+        <form id="login-balloon-box" class="dark">                
+            <h1 id="title" class="dark">Gamebase</h1>  
+            <div id="theme-toggler-div">                    
+                <div id="theme-toggler-bar" class="dark">
+                    <label for="theme-toggler-input">
+                        <input name="theme-toggler-input" id="theme-toggler-input" type="checkbox" />
+                    </label>
+                    <div id="theme-toggler-circle" class="dark" onclick="toggleTheme();">
+                        <img src="./../assets/svg/sun-light.svg" />
+                    </div>
+                </div>
+            </div>              
+            <div id="login-balloon-texts">
+                <div class="dark text-input-div">
+                    <label class="text-input-label" for="username">
+                        <input id="username" class="dark text-input" name="username" type="text" placeholder="Seu nome de usuário..." required onkeyup="listenUsernameInput();" />
+                    </label>
+                </div>     
+                <div id="username-warning-div" class="warning-text">
+                    <p>O username não foi informado!</p>
+                </div>    
+                <div class="dark text-input-div">
+                    <label class="text-input-label" for="password">
+                        <input id="password" class="dark text-input" name="password" type="password" placeholder="Sua senha..." required onkeyup="listenPasswordInput();" />
+                    </label>
+                    <button type="button" onclick="togglePasswordVisibility();">
+                        <img id="password-visibility-indicator" src="./assets/svg/eye-open-dark.svg"/>
+                    </button>                    
+                </div>
+                <div id="password-warning-div" class="warning-text">
+                    <p>A senha não foi informada!</p>
+                </div>    
+            </div>
+            <div id="login-confirmations-box">
+                <div id="one-week-checkbox-div">
+                    <label id="one-week-checkbox-label" class="unchecked dark" for="password">
+                        <input id="one-week-checkbox" name="one-week-checkbox" type="checkbox" onclick="toggleOneWeekCheckboxState();" />
+                    </label>
+                    <span id="one-week-reminder-text" class="dark">Lembrar de mim por uma semana</span>
+                </div>
+                <label id="login-button-label" for="submit">
+                    <button id="login-button" name="submit" type="button" onclick="tryLogin();" class="dark">
+                        <div id="login-button-not-clicked-status">
+                            <span class="dark">Entrar</span>
+                        </div>                            
+                        <div id="login-button-clicked-status">
+                            <img src="./../assets/svg/loading-dark.svg" />
+                            <span class="dark">Entrando...</span>
+                        </div>                  
+                    </button>
+                </label>            
+            </div>                                     
+        </form>
+    </div>        
+</div>

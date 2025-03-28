@@ -1,13 +1,12 @@
-body {    
-    position: relative;
-    margin: 0;
+#container {    
+    position: relative;    
 }
 
-.dark.background {
+#container.dark {
     background-color: #0A0217;
 }
 
-.light.background {
+#container.light {
     background-color: #DAD3FB;
 }
 
