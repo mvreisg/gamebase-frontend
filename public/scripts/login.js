@@ -15,38 +15,58 @@ let isOneWeekChecked = false;
 let isPasswordVisible = false;
 
 (async () => {    
-    const response = await fetch('./views/login.html');
-    const text = await response.text();        
-    document.querySelector('#app').innerHTML = text;
-
     const token = localStorage.getItem('token');
+    let isUnauthorized = false;
     if (token !== null){
         const body = {
             'token': token
         };
-        fetch('http://localhost:80/auth/validate', {
-            method: 'POST', 
-            body: JSON.stringify(body)
-        }).then(data => {
-            if (!data.ok){
-                return data.json().then(error => { throw error; });
-            }
-            if (data.status === 200){
-                return data.json();                                
-            }
-        })
-        .then(json => {            
-            navigateTo('/home', '');                        
-        })
-        .catch(error => {                         
-            fetch('http://localhost:80/auth/logoff', {
-                method: 'POST', body: body
-            }).then(data => {
-                showErrorMessageBox(error.message);
+        try{
+            const response = await fetch('http://localhost:80/auth/validate', {
+                method: 'POST', 
+                body: JSON.stringify(body)
             });
-        });        
+            const status = response.status;
+    
+            if (status === 200){
+                navigateTo('/home', '');                        
+                return;
+            }
+    
+            if (status === 401){
+                isUnauthorized = true;
+            }
+        }
+        catch {
+            isUnauthorized = true;
+        }                
+
+        if (isUnauthorized){
+            try{
+                const response = await fetch('http://localhost:80/auth/logoff', {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+
+                const status = response.status;
+
+                if (status !== 200){
+                    isUnauthorized = true;
+                }
+            }
+            catch {
+                isUnauthorized = true;
+            }
+            finally {
+                localStorage.removeItem('token');
+            }
+        }
     }
-             
+
+    const response = await fetch('./views/login.html');
+    const text = await response.text();        
+    document.querySelector('#app').innerHTML = text;    
+
     startTheme();
 
     setLoginButtonClickedVisibility(false);
