@@ -8,5 +8,161 @@
 
 #container {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 6.25rem;
+    box-sizing: border-box;
+}
+
+#wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+#top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    border-radius: 0.75rem;
+}
+
+#top-bar.dark {
+    background-color: #100E41;
+    border: 0.25rem solid #31246D;
+}
+
+#top-bar.light {
+
+}
+
+#title {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-left: 1rem;
+}
+
+#title.dark {
+    color: #FFFFFF;
+}
+
+#title.light {
+
+}
+
+#top-bar nav {
+    margin-left: 6.4375rem;    
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#top-bar nav p {
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+#top-bar nav p.dark {
+    color: #FFFFFF;
+}
+
+#top-bar nav p.light {
+
+}
+
+#options-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-right: 1.5rem;
+    gap: 1.5rem;
+}
+
+#theme-toggler-bar {
+    position: relative;
+    width: 1.875rem;
+    height: 0.875rem;
+    border-radius: 0.75rem;
+}
+
+#theme-toggler-bar.dark {
+    background-color: #FFFFFF;
+}
+
+#theme-toggler-bar.light {
+
+}
+
+#theme-toggler-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+}
+
+#theme-toggler-circle.dark {
+    top: -50%;
+    left: -50%;
+    background-color: #FFFFFF;
+}
+
+#theme-toggler-circle.light {
+    top: -50%;
+    right: 50%;
+}
+
+#theme-toggler-circle-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 50%;
+}
+
+#theme-toggler-circle-center.dark {
+    background-color: #000000;
+}
+
+#theme-toggler-circle-center.light {
+
+}
+
+#dashboard {
+    width: 100%;
+    height: 100vh;  
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+}
+
+#welcome-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: end;
+    gap: 0.3125rem;
+}
+
+#welcome-box span {
+    font-family: "Inter", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#welcome-box span.dark {
+    color: #FFFFFF;
+}
+
+#welcome-box span.light {
+
 }
