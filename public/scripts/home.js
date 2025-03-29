@@ -1,4 +1,8 @@
 (async() => {
+    const fetchResponse = await fetch('./views/home.html');
+    const fetchText = await fetchResponse.text();
+    document.querySelector('#app').innerHTML = fetchText;
+
     const token = localStorage.getItem('token');
     if (token === null){
         navigateTo('/', '');
@@ -41,9 +45,5 @@
             navigateTo('/', '');
             return;
         }     
-    }
-
-    const fetchResponse = await fetch('./views/home.html');
-    const fetchText = await fetchResponse.text();
-    document.querySelector('#app').innerHTML = fetchText;    
+    }    
 })();

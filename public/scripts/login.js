@@ -14,7 +14,11 @@ import {
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
 
-(async () => {    
+(async () => { 
+    const response = await fetch('./views/login.html');
+    const text = await response.text();        
+    document.querySelector('#app').innerHTML = text;    
+
     const token = localStorage.getItem('token');
     let isUnauthorized = false;
     if (token !== null){
@@ -62,10 +66,6 @@ let isPasswordVisible = false;
             }
         }
     }
-
-    const response = await fetch('./views/login.html');
-    const text = await response.text();        
-    document.querySelector('#app').innerHTML = text;    
 
     startTheme();
 
