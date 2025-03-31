@@ -14,7 +14,17 @@ import {
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
 
-(async () => { 
+const environment = {
+    type: '',
+    backendURL: ''
+};
+
+(async () => {
+    const envResponse = await fetch('./config/environment.json');
+    const envJson = await envResponse.json();
+    environment.type = envJson.type;
+    environment.backendURL = envJson.options[environment.type].backendURL;    
+    
     const response = await fetch('./views/login.html');
     const text = await response.text();        
     document.querySelector('#app').innerHTML = text;    
@@ -26,7 +36,7 @@ let isPasswordVisible = false;
             'token': token
         };
         try{
-            const response = await fetch('http://localhost:80/auth/validate', {
+            const response = await fetch(`${environment.backendURL}/auth/validate`, {
                 method: 'POST', 
                 body: JSON.stringify(body)
             });
@@ -47,7 +57,7 @@ let isPasswordVisible = false;
 
         if (isUnauthorized){
             try{
-                const response = await fetch('http://localhost:80/auth/logoff', {
+                const response = await fetch(`${environment.backendURL}/auth/logoff`, {
                     method: 'POST',
                     body: JSON.stringify(body)
                 });
@@ -325,7 +335,7 @@ const tryLogin = async function(){
     };
     
     try{
-        const response = await fetch('http://localhost:80/auth/login', {
+        const response = await fetch(`${environment.backendURL}/auth/login`, {
             body: JSON.stringify(body),
             method: 'POST',        
             headers: {
@@ -348,7 +358,8 @@ const tryLogin = async function(){
 
         navigateTo('/home', '');        
     }
-    catch {        
+    catch(err) {    
+        console.error(err)    
         showErrorMessageBox('Erro ao estabelecer conexão com o servidor.');
     }         
 }
