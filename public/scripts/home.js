@@ -1,4 +1,14 @@
+const environment = {
+    type: '',
+    backendURL: ''
+};
+
 (async() => {
+    const envResponse = await fetch('./config/environment.json');
+    const envJson = await envResponse.json();
+    environment.type = envJson.type;
+    environment.backendURL = envJson.options[environment.type].backendURL;  
+
     const fetchResponse = await fetch('./views/home.html');
     const fetchText = await fetchResponse.text();
     document.querySelector('#app').innerHTML = fetchText;
@@ -18,7 +28,7 @@
             const body = {
                 'token': token
             };
-            const response = await fetch('http://localhost:80/auth/validate', {
+            const response = await fetch(`${environment.backendURL}/auth/validate`, {
                 method: 'POST',
                 body: JSON.stringify(body)
             });
@@ -36,7 +46,7 @@
             const body = {
                 'token': token
             };
-            const response = await fetch('http://localhost:80/auth/logoff', {
+            const response = await fetch(`${environment.backendURL}/auth/logoff`, {
                 method: 'POST',
                 body: JSON.stringify(body)
             });
