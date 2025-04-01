@@ -1,4 +1,5 @@
-fetch('./views/404.html').then(data => data.text()).then(text => {
-    document.querySelector('#app').innerHTML = text;    
-
-});
+(async() => {
+    const fetchResponse = await fetch('./views/404.html');
+    const fetchText = await fetchResponse.text();
+    document.querySelector('#app').innerHTML = fetchText;
+})();

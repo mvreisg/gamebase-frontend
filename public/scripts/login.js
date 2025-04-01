@@ -23,11 +23,7 @@ const environment = {
     const envResponse = await fetch('./config/environment.json');
     const envJson = await envResponse.json();
     environment.type = envJson.type;
-    environment.backendURL = envJson.options[environment.type].backendURL;    
-    
-    const response = await fetch('./views/login.html');
-    const text = await response.text();        
-    document.querySelector('#app').innerHTML = text;    
+    environment.backendURL = envJson.options[environment.type].backendURL;      
 
     const token = localStorage.getItem('token');
     let isUnauthorized = false;
@@ -76,6 +72,10 @@ const environment = {
             }
         }
     }
+
+    const response = await fetch('./views/login.html');
+    const text = await response.text();        
+    document.querySelector('#app').innerHTML = text;  
 
     startTheme();
 
