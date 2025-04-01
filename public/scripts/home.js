@@ -9,10 +9,6 @@ const environment = {
     environment.type = envJson.type;
     environment.backendURL = envJson.options[environment.type].backendURL;  
 
-    const fetchResponse = await fetch('./views/home.html');
-    const fetchText = await fetchResponse.text();
-    document.querySelector('#app').innerHTML = fetchText;
-
     const token = localStorage.getItem('token');
     if (token === null){
         navigateTo('/', '');
@@ -56,4 +52,18 @@ const environment = {
             return;
         }     
     }    
+    
+    const fetchResponse = await fetch('./views/home.html');
+    const fetchText = await fetchResponse.text();
+    document.querySelector('#app').innerHTML = fetchText;
+
+    document.querySelector("#full-bar-nav-item-categories").addEventListener('mouseenter', () => {
+        const element = document.querySelector("#full-bar-nav-categories-dropdown");
+        element.style.display = 'flex';
+    });
+
+    document.querySelector("#full-bar-nav-item-categories").addEventListener('mouseleave', () => {
+        const element = document.querySelector("#full-bar-nav-categories-dropdown");
+        element.style.display = 'none';
+    });
 })();

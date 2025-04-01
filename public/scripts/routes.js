@@ -93,12 +93,16 @@ window.addEventListener('load', () => {
         'route': '/404',
         'title': 'Gamebase - 404',
         'scripts': [
-            './scripts/404.js'
+            {
+                'path': './scripts/404.js'
+            }            
         ],
         'stylesheets': [
-            './styles/404.css'
+            {
+                'path': './styles/404.css'
+            }
         ]
-    }) 
+    }, '/404', '');    
 });
 
 window.addEventListener('popstate', () => {    

@@ -65,23 +65,87 @@
 }
 
 #full-bar-nav {
-    margin-left: 6.4375rem;        
-    box-sizing: border-box;
-    flex-grow: 1;
+    margin-left: 4.875rem;        
+    box-sizing: border-box;    
+    height: 100%;
+    width: 100%;
 }
 
-#full-bar-nav span {
+.full-bar-nav-item-div {
+    padding: 0rem 1.5625rem;
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+}
+
+.full-bar-nav-item-div span {
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
 }
 
-#full-bar-nav span.dark {
+.full-bar-nav-item-div:hover {
+    background-color: #31246D;
+    cursor: pointer;
+}
+
+.full-bar-nav-item-div span.dark {
+    color: #FFFFFF;    
+}
+
+.full-bar-nav-item-div span.light {
+
+}
+
+#full-bar-nav-categories-dropdown {    
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem 1.5625rem;
+    width: 18.75rem;
+}
+
+#full-bar-nav-categories-dropdown.dark {
+    background-color: #0A0217;
+    border: 4px solid #31246D;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+}
+
+#full-bar-nav-categories-dropdown.light {
+
+}
+
+#full-bar-nav-categories-dropdown div {
+    
+}
+
+#full-bar-nav-categories-dropdown hr {
+    margin: 0;
+    width: 100%;
+    border-color: #31246D;
+}
+
+#full-bar-nav-categories-dropdown div a {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;    
+    padding: 1.0625rem 0;
+    text-decoration: none;
+}
+
+#full-bar-nav-categories-dropdown div a.dark {
     color: #FFFFFF;
 }
 
-#full-bar-nav span.light {
-
+#full-bar-nav-categories-dropdown div a.light {
+    
 }
 
 #options-buttons {
@@ -174,6 +238,12 @@
 
 #welcome-box span.light {
 
+}
+
+@media only screen and (max-width: 62.5rem){ /*1000px*/
+    #full-bar-nav-categories-dropdown {
+        width: 6.25rem;
+    }
 }
 
 @media only screen and (max-width: 51.25rem){ /*820px*/
