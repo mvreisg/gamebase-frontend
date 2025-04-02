@@ -105,8 +105,7 @@
     top: 100%;
     left: 0;
     display: none;
-    flex-direction: column;
-    padding: 0.5rem 1.5625rem;
+    flex-direction: column;    
     width: 18.75rem;
 }
 
@@ -127,8 +126,8 @@
 
 #full-bar-nav-categories-dropdown hr {
     margin: 0;
-    width: 100%;
     border-color: #31246D;
+    margin: 0 1.5625rem;
 }
 
 #full-bar-nav-categories-dropdown div a {
@@ -136,12 +135,16 @@
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     font-weight: 500;    
-    padding: 1.0625rem 0;
+    padding: 1.0625rem 1.5625rem;    
     text-decoration: none;
 }
 
 #full-bar-nav-categories-dropdown div a.dark {
     color: #FFFFFF;
+}
+
+#full-bar-nav-categories-dropdown div a.dark:hover {
+    background-color: #100E41;
 }
 
 #full-bar-nav-categories-dropdown div a.light {
