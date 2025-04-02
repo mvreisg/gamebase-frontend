@@ -1,6 +1,17 @@
+import {
+    loadSvgToUrl
+} from './svg.js'
+
 const environment = {
     type: '',
     backendURL: ''
+};
+
+const compactDropdownState = {
+    opened: false,
+    categoriesDropdown: {
+        opened: false
+    }
 };
 
 (async() => {
@@ -65,5 +76,51 @@ const environment = {
     document.querySelector("#full-bar-nav-item-categories").addEventListener('mouseleave', () => {
         const element = document.querySelector("#full-bar-nav-categories-dropdown");
         element.style.display = 'none';
+    });
+
+    document.querySelector("#compact-menu-icon-div").addEventListener('click', async () => {    
+        compactDropdownState.opened = !compactDropdownState.opened;
+        const div = document.querySelector("#compact-menu-icon-div");
+        const img = document.querySelector("#compact-menu-icon-image");
+        if (compactDropdownState.opened){
+            div.classList.add('opened');
+            img.src = await loadSvgToUrl('x-dark');
+        } else {
+            div.classList.remove('opened');
+            img.src = await loadSvgToUrl('bars-dark');
+        }
+
+        const elements = document.querySelectorAll(".compact-nav-item");        
+        elements.forEach((element) => {
+            const display = window.getComputedStyle(element).display;
+            switch (display){
+                case 'none':
+                    element.style.display = 'flex';
+                    break;
+                case 'flex':
+                    element.style.display = 'none';
+                    break;                    
+            }
+        });
+    });
+
+    document.querySelector("#compact-nav-categories-item").addEventListener('click', () => {
+        compactDropdownState.categoriesDropdown.opened = !compactDropdownState.categoriesDropdown.opened;
+        const img = document.querySelector("#compact-categories-image");
+        if (compactDropdownState.categoriesDropdown.opened) {
+            img.style.transform = 'rotate(90deg)';
+        } else {
+            img.style.transform = 'rotate(0deg)';
+        }
+        const element = document.querySelector("#compact-nav-categories-dropdown");        
+        const display = window.getComputedStyle(element).display;
+        switch (display){
+            case 'none':
+                element.style.display = 'flex';
+                break;
+            case 'flex':
+                element.style.display = 'none';
+                break;                    
+        }        
     });
 })();

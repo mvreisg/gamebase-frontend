@@ -25,7 +25,7 @@ const data = [
         'scripts': [
             {
                 'path': './scripts/home.js',
-                'isModule': false
+                'isModule': true
             }            
         ],
         'stylesheets': [
