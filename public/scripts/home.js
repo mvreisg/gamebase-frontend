@@ -67,9 +67,36 @@ const compactDropdownState = {
         }     
     }    
     
+    const searchParams = new URLSearchParams(window.location.search)
+    const usernameParam = searchParams.get('username');
+
+    let username = localStorage.getItem('username');
+    if (username === null && usernameParam){
+        localStorage.setItem('username', usernameParam);
+        username = usernameParam;
+    }
+
+    const userResponse = await fetch(`${environment.backendURL}/user/find/userName/${username}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    const userStatus = userResponse.status;
+
+    if (userStatus !== 200){
+        navigateTo('/?logoff=true', '');
+        return;
+    }
+
+    const userJson = await userResponse.json();
+
     const fetchResponse = await fetch('./views/home.html');
     const fetchText = await fetchResponse.text();
     document.querySelector('#app').innerHTML = fetchText;
+
+    document.querySelector("#profile-menu-welcome-message-username").innerHTML = userJson.data.username;
 
     document.querySelector("#full-bar-nav-item-categories").addEventListener('mouseenter', () => {
         const element = document.querySelector("#full-bar-nav-categories-dropdown");

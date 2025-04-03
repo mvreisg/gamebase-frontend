@@ -41,6 +41,7 @@ const environment = {
         }
         finally {
             localStorage.removeItem('token');
+            localStorage.removeItem('username');
         }
     }
     
@@ -87,6 +88,7 @@ const environment = {
             }
             finally {
                 localStorage.removeItem('token');
+                localStorage.removeItem('username');
             }
         }
     }
@@ -374,7 +376,7 @@ const tryLogin = async function(){
 
         localStorage.setItem('token', json.token);
 
-        navigateTo('/home', '');        
+        navigateTo(`/home?username=${username}`, '');        
     }
     catch(err) {    
         console.error(err)    
