@@ -21,6 +21,7 @@
 }
 
 #top-bar {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -129,7 +130,6 @@
 }
 
 #full-bar-nav-categories-dropdown hr {
-    margin: 0;
     border-color: #31246D;
     margin: 0 1.5625rem;
 }
@@ -160,8 +160,8 @@
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    margin-right: 1.5rem;
     gap: 1.5rem;
+    height: 100%;
 }
 
 #theme-toggler-bar {
@@ -217,6 +217,105 @@
 
 }
 
+#profile-menu-div {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4.5rem;
+    height: 100%;    
+}
+
+#profile-menu-icon-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#profile-menu-welcome-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+#profile-menu {
+    position: absolute;
+    top: 100%;
+    background-color: #00ff00;
+    border-width: 0.25rem;
+    border-radius: 0.75rem;
+    border-style: solid;
+    border-color: #FFFFFF;
+    width: max-content;
+    right: -0.25rem;   
+    display: none; 
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+}
+
+#profile-menu div {
+    padding: 1.5625rem;
+}
+
+#profile-menu a {
+    padding: 1.5625rem;
+}
+
+#profile-menu div span {
+    font-family: "Inter", sans-serif;    
+}
+
+#profile-menu-welcome-div.dark:hover {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    background-color: #100E41;
+}
+
+#profile-menu-welcome-message-prefix {
+    font-weight: 400;
+}
+
+#profile-menu-welcome-message-username {
+    font-weight: 500;
+}
+
+#profile-menu-welcome-message-suffix {
+    font-weight: 400;
+}
+
+#profile-menu div span.dark {
+    color: #FFFFFF;
+}
+
+#profile-menu hr {
+    width: -webkit-fill-available;
+    margin: 0 1.5625rem;
+}
+
+#profile-menu.dark {
+    background-color: #0A0217;
+}
+
+#profile-menu-logoff-anchor {
+    text-align: end;
+    align-self: stretch;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    color: #FF0000;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+}
+
+#profile-menu-logoff-anchor:hover {
+    background-color: #410E0F;
+}
+
 #dashboard {
     width: 100%;
     height: 100vh;  
@@ -248,6 +347,12 @@
 }
 
 @media only screen and (max-width: 51.25rem){ /*820px*/
+    #profile-menu {
+        left: -0.25rem;
+        width: 100%;
+        border-radius: 0;
+    }
+
     #container {
         width: 100%;
         min-height: 100vh;
@@ -358,7 +463,6 @@
     }
     
     #compact-nav-categories-dropdown hr {
-        margin: 0;
         border-color: #31246D;
         margin: 0 1.5625rem;
     }
@@ -395,6 +499,11 @@
     
     #full-bar-nav {
         display: none;
+    }
+
+    #profile-menu-welcome-div {
+        justify-content: end;
+        align-self: stretch;
     }
 
     #welcome-box img {

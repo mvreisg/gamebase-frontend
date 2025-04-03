@@ -25,7 +25,25 @@ const environment = {
     environment.type = envJson.type;
     environment.backendURL = envJson.options[environment.type].backendURL;      
 
+    const searchParams = new URLSearchParams(window.location.search)
+    const logoff = searchParams.get('logoff');
+
     const token = localStorage.getItem('token');
+    if (logoff) {
+        const body = {
+            'token': token
+        };
+        try{
+            await fetch(`${environment.backendURL}/auth/logoff`, {
+                method: 'POST',
+                body: JSON.stringify(body)
+            });
+        }
+        finally {
+            localStorage.removeItem('token');
+        }
+    }
+    
     let isUnauthorized = false;
     if (token !== null){
         const body = {

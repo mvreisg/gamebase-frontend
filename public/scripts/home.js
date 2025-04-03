@@ -11,6 +11,9 @@ const compactDropdownState = {
     opened: false,
     categoriesDropdown: {
         opened: false
+    },
+    profileMenu: {
+        opened: false
     }
 };
 
@@ -122,5 +125,15 @@ const compactDropdownState = {
                 element.style.display = 'none';
                 break;                    
         }        
+    });
+
+    document.querySelector("#profile-menu-icon-div").addEventListener('click', () => {
+        compactDropdownState.profileMenu.opened = !compactDropdownState.profileMenu.opened;
+        const div = document.querySelector("#profile-menu");
+        if (compactDropdownState.profileMenu.opened){
+            div.style.display = 'flex';
+        } else{
+            div.style.display = 'none';
+        }
     });
 })();
