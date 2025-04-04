@@ -1,42 +1,43 @@
+import {
+    getEnvironment
+} from '../environment.js';
+
+import {
+    navigateTo
+} from '../history.js';
+
 import { 
     changeBodyTheme, 
-    changeThemeClasses, 
-    getTheme, 
-    setTheme, 
-    startTheme, 
-    state as themeState
-} from './themes.js';
+    startTheme
+} from '../theme.js';
 
 import {
     loadSvgToUrl
-} from './svg.js';
+} from '../svg.js';
+
+import {
+    validate,
+    logoff,
+    login
+} from './../requests/auth.js'
 
 let isOneWeekChecked = false;
 let isPasswordVisible = false;
 
-const environment = {
-    type: '',
-    backendURL: ''
-};
+let environment = null;
 
-(async () => {
-    const envResponse = await fetch('./config/environment.json');
-    const envJson = await envResponse.json();
-    environment.type = envJson.type;
-    environment.backendURL = envJson.options[environment.type].backendURL;      
+export const start = async () => {
+    environment = await getEnvironment();    
 
     const searchParams = new URLSearchParams(window.location.search)
-    const logoff = searchParams.get('logoff');
+    const hasToLogOff = searchParams.get('logoff');
 
     const token = localStorage.getItem('token');
-    if (logoff) {
-        const body = {
-            'token': token
-        };
+    
+    if (hasToLogOff && token !== null) {     
         try{
-            await fetch(`${environment.backendURL}/auth/logoff`, {
-                method: 'POST',
-                body: JSON.stringify(body)
+            await logoff({
+                'token': token
             });
         }
         finally {
@@ -46,19 +47,15 @@ const environment = {
     }
     
     let isUnauthorized = false;
-    if (token !== null){
-        const body = {
-            'token': token
-        };
+    if (hasToLogOff === null && token !== null){    
         try{
-            const response = await fetch(`${environment.backendURL}/auth/validate`, {
-                method: 'POST', 
-                body: JSON.stringify(body)
+            const response = await validate({
+                'token': token
             });
             const status = response.status;
     
             if (status === 200){
-                navigateTo('/home', '');                        
+                navigateTo('/home');                        
                 return;
             }
     
@@ -72,19 +69,9 @@ const environment = {
 
         if (isUnauthorized){
             try{
-                const response = await fetch(`${environment.backendURL}/auth/logoff`, {
-                    method: 'POST',
-                    body: JSON.stringify(body)
+                await logoff({
+                    'token': token
                 });
-
-                const status = response.status;
-
-                if (status !== 200){
-                    isUnauthorized = true;
-                }
-            }
-            catch {
-                isUnauthorized = true;
             }
             finally {
                 localStorage.removeItem('token');
@@ -93,9 +80,18 @@ const environment = {
         }
     }
 
-    const response = await fetch('./views/login.html');
-    const text = await response.text();        
-    document.querySelector('#app').innerHTML = text;  
+    const cssResponse = await fetch('./styles/login.css');
+    const cssText = await cssResponse.text();
+    const style = document.createElement('style');
+    style.innerHTML = cssText;
+    document.head.append(style);
+
+    const htmlResponse = await fetch('./views/login.html');
+    const htmlText = await htmlResponse.text();        
+    document.querySelector('#app').innerHTML = htmlText;  
+
+    const themeTogglerResponse = await import('./components/theme-toggler.js');
+    await themeTogglerResponse.start();
 
     startTheme();
 
@@ -106,19 +102,8 @@ const environment = {
     setPasswordWarningState(false);
     setPasswordVisibilityState(isPasswordVisible);
     setOneWeekCheckboxState(isOneWeekChecked);
-
-    changeThemeCircleImage();
+    
     changeLoadingImage();
-
-    const themeTogglerInput = document.querySelector("#theme-toggler-input");
-    themeTogglerInput.focus();
-    themeTogglerInput.addEventListener("keydown", function(event) {
-        if (event.code === "Space"){
-            toggleTheme();
-        }
-    });
-
-    document.querySelector("#theme-toggler-circle").addEventListener('click', () => toggleTheme());
 
     document.querySelector("#username").addEventListener('keyup', () => listenUsernameInput());
     document.querySelector("#password").addEventListener('keyup', () => listenPasswordInput());
@@ -130,24 +115,16 @@ const environment = {
     document.querySelector("#login-button").addEventListener('click', () => tryLogin());
 
     document.querySelector("#login-error-div").addEventListener('click', (event) => closeErrorMessageBox(event));
-})();
+
+    document.addEventListener('changeThemeEvent', () => toggleTheme());
+}
 
 const toggleTheme = function(){
-    switch(themeState.theme){
-        case 'dark': 
-            setTheme('light');           
-            break;
-        case 'light':                    
-            setTheme('dark');
-            break;
-    }
-
     changeBodyTheme();   
 
     setPasswordVisibilityState(isPasswordVisible);
     setOneWeekCheckboxState(isOneWeekChecked);
 
-    changeThemeCircleImage();
     changeLoadingImage();
 }
 
@@ -217,7 +194,7 @@ const setPasswordVisibilityVisual = async function(isVisible){
     const passwordInput = document.querySelector("#password");
     if (isVisible){
         passwordInput.type = 'text';
-        switch(themeState.theme){
+        switch(localStorage.getItem('theme')){
             case 'light':                
                 passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-dashed-light');
                 break;
@@ -227,7 +204,7 @@ const setPasswordVisibilityVisual = async function(isVisible){
         }
     } else {
         passwordInput.type = 'password';
-        switch(themeState.theme){
+        switch(localStorage.getItem('theme')){
             case 'light':                
                 passwordVisibilityIndicatorImage.src = await loadSvgToUrl('eye-open-light');;
                 break;
@@ -238,21 +215,9 @@ const setPasswordVisibilityVisual = async function(isVisible){
     }
 }
 
-const changeThemeCircleImage = async function(){
-    const img = document.querySelector("#theme-toggler-circle>img");
-    switch(themeState.theme){
-        case 'dark':
-            img.src = await loadSvgToUrl('sun-light');
-            break;
-        case 'light':
-            img.src = await loadSvgToUrl('moon-dark');
-            break;
-    }    
-}
-
 const changeLoadingImage = async function(){
     const img = document.querySelector("#login-button-clicked-status>img");
-    switch(themeState.theme){
+    switch(localStorage.getItem('theme')){
         case 'dark':
             img.src = await loadSvgToUrl('loading-dark');
             break;
@@ -355,13 +320,7 @@ const tryLogin = async function(){
     };
     
     try{
-        const response = await fetch(`${environment.backendURL}/auth/login`, {
-            body: JSON.stringify(body),
-            method: 'POST',        
-            headers: {
-                'Content-Type': 'application/json'
-            }      
-        });
+        const response = await login(body);
 
         const status = response.status;
 
@@ -376,7 +335,7 @@ const tryLogin = async function(){
 
         localStorage.setItem('token', json.token);
 
-        navigateTo(`/home?username=${username}`, '');        
+        navigateTo(`/home?username=${username}`);        
     }
     catch(err) {    
         console.error(err)    

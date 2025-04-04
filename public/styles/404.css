@@ -56,3 +56,17 @@
 #container a.light {
     color: #000000;
 }
+
+@media screen and (max-width: 600px){
+    #container h1 {
+        font-size: 2rem;
+    }
+
+    #container p {
+        font-size: 0.625rem;
+    }
+
+    #container a {
+        font-size: 0.75rem;
+    }
+}

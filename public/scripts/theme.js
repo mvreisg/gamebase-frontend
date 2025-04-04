@@ -1,10 +1,8 @@
-export const state = {
-    theme: 'dark'
-};
+export const changeThemeEvent = new Event('changeThemeEvent');
 
-export const changeThemeClasses = function(element){
+const changeThemeClasses = function(element){
     const classList = element.classList;
-    switch(state.theme){
+    switch(localStorage.getItem('theme')){
         case 'dark':
             if (classList.contains('light')){
                 classList.remove('light');
@@ -21,31 +19,23 @@ export const changeThemeClasses = function(element){
     return classList;
 }
 
-export const changeBodyTheme = function(){
-    const elements = document.querySelectorAll('*');
+export const changeNodeTheme = (selector) => {
+    const elements = document.querySelectorAll(selector);
 
     elements.forEach((element) => {
         changeThemeClasses(element);
-    })
+    });
 }
 
-export const setTheme = function(theme){
-    localStorage.setItem('theme', theme);
-    state.theme = theme;
-}
-
-export const getTheme = function(){
-    localStorage.getItem('theme');
+export const changeBodyTheme = function(){
+    changeNodeTheme('*');
 }
 
 export const startTheme = () => {    
     const theme = localStorage.getItem('theme');
 
     if (theme === null){
-        setTheme('dark');
-    }
-    else{
-        setTheme(theme);
+        localStorage.setItem('theme', 'dark');
     }
 
     changeBodyTheme();

@@ -1,11 +1,10 @@
 import {
-    loadSvgToUrl
-} from './svg.js'
+    findByUserName
+} from '../../requests/user.js'
 
-const environment = {
-    type: '',
-    backendURL: ''
-};
+import {
+    loadSvgToUrl
+} from './../../svg.js'
 
 const compactDropdownState = {
     opened: false,
@@ -17,55 +16,8 @@ const compactDropdownState = {
     }
 };
 
-(async() => {
-    const envResponse = await fetch('./config/environment.json');
-    const envJson = await envResponse.json();
-    environment.type = envJson.type;
-    environment.backendURL = envJson.options[environment.type].backendURL;  
-
+export const start = async () => {
     const token = localStorage.getItem('token');
-    if (token === null){
-        navigateTo('/', '');
-        return;
-    }
-
-    const loginState = {
-        mustLogoff: false
-    };
-
-    {
-        try{
-            const body = {
-                'token': token
-            };
-            const response = await fetch(`${environment.backendURL}/auth/validate`, {
-                method: 'POST',
-                body: JSON.stringify(body)
-            });
-            const status = response.status;
-            if (status === 401 || status === 500){
-                loginState.mustLogoff = true;
-            }
-        } catch {
-            loginState.mustLogoff = true;
-        }        
-    }
-
-    if (loginState.mustLogoff){
-        try{
-            const body = {
-                'token': token
-            };
-            const response = await fetch(`${environment.backendURL}/auth/logoff`, {
-                method: 'POST',
-                body: JSON.stringify(body)
-            });
-        } finally {
-            localStorage.removeItem('token');
-            navigateTo('/', '');
-            return;
-        }     
-    }    
     
     const searchParams = new URLSearchParams(window.location.search)
     const usernameParam = searchParams.get('username');
@@ -76,25 +28,29 @@ const compactDropdownState = {
         username = usernameParam;
     }
 
-    const userResponse = await fetch(`${environment.backendURL}/user/find/userName/${username}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
+    const userResponse = await findByUserName(username, token);
 
     const userStatus = userResponse.status;
 
     if (userStatus !== 200){
-        navigateTo('/?logoff=true', '');
+        navigateTo('/?logoff=true');
         return;
     }
 
     const userJson = await userResponse.json();
 
-    const fetchResponse = await fetch('./views/home.html');
-    const fetchText = await fetchResponse.text();
-    document.querySelector('#app').innerHTML = fetchText;
+    const cssResponse = await fetch('./../styles/components/top-bar.css');
+    const cssText = await cssResponse.text();
+    const style = document.createElement('style');
+    style.innerHTML = cssText;
+    document.head.append(style);
+
+    const htmlResponse = await fetch('./../views/components/top-bar.html');
+    const htmlText = await htmlResponse.text();        
+    document.querySelector('#top-bar').innerHTML = htmlText;  
+
+    const themeTogglerResponse = await import('./theme-toggler.js');
+    await themeTogglerResponse.start();
 
     document.querySelector("#profile-menu-welcome-message-username").innerHTML = userJson.data.username;
 
@@ -111,14 +67,13 @@ const compactDropdownState = {
     document.querySelector("#compact-menu-icon-div").addEventListener('click', async () => {    
         compactDropdownState.opened = !compactDropdownState.opened;
         const div = document.querySelector("#compact-menu-icon-div");
-        const img = document.querySelector("#compact-menu-icon-image");
+                
         if (compactDropdownState.opened){
-            div.classList.add('opened');
-            img.src = await loadSvgToUrl('x-dark');
+            div.classList.add('opened');            
         } else {
-            div.classList.remove('opened');
-            img.src = await loadSvgToUrl('bars-dark');
+            div.classList.remove('opened');            
         }
+        changeCompactMenuIconImage();
 
         const elements = document.querySelectorAll(".compact-nav-item");        
         elements.forEach((element) => {
@@ -163,4 +118,79 @@ const compactDropdownState = {
             div.style.display = 'none';
         }
     });
-})();
+
+    document.addEventListener('changeThemeEvent', () => {
+        changeProfileMenuIcon();
+        changeCompactNavBarIcon();
+        changeCompactMenuIconImage();
+        changeCompactNavItemsImage();
+    });
+
+    changeProfileMenuIcon();
+    changeCompactNavBarIcon();
+    changeCompactMenuIconImage();
+    changeCompactNavItemsImage();
+}
+
+const changeProfileMenuIcon = async () => {
+    const img = document.querySelector("#profile-menu-icon");
+    switch(localStorage.getItem('theme')){
+        case 'dark':
+            img.src = await loadSvgToUrl('profile-dark');
+            break;
+        case 'light':
+            img.src = await loadSvgToUrl('profile-light');
+            break;
+    }
+}
+
+const changeCompactNavBarIcon = async () => {
+    const img = document.querySelector("#compact-menu-icon-image");
+    switch(localStorage.getItem('theme')){
+        case 'dark':
+            img.src = await loadSvgToUrl('bars-dark');
+            break;
+        case 'light':
+            img.src = await loadSvgToUrl('bars-light');
+            break;
+    }
+}
+
+const changeCompactMenuIconImage = async () => {
+    const img = document.querySelector("#compact-menu-icon-image");
+    const theme = localStorage.getItem('theme');
+    if (compactDropdownState.opened){
+        switch(theme){
+            case 'dark':
+                img.src = await loadSvgToUrl('x-dark');
+                break;
+            case 'light':
+                img.src = await loadSvgToUrl('x-light');
+                break;
+        }            
+    } else {
+        switch(theme){
+            case 'dark':
+                img.src = await loadSvgToUrl('bars-dark');
+                break;
+            case 'light':
+                img.src = await loadSvgToUrl('bars-light');
+                break;
+        }            
+    }
+}
+
+const changeCompactNavItemsImage = async () => {
+    const images = document.querySelectorAll(".compact-nav-items-image");
+    const theme = localStorage.getItem('theme');
+    images.forEach(async (image) => {
+        switch(theme){
+            case 'dark':
+                image.src = await loadSvgToUrl('arrow-pointing-to-right-dark');
+                break;
+            case 'light':
+                image.src = await loadSvgToUrl('arrow-pointing-to-right-light');
+                break;
+        }
+    });
+}
