@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+.primary-background-color.dark {
+  background-color: #0A0217;
+}
+
+.primary-background-color.light {
+  background-color: #DAD3FB;
+}
+
+.secondary-background-color.dark {
+  background-color: #100E41;
+}
+
+.secondary-background-color.light {
+  background-color: #C8BEF9;
+}
+
+.tertiary-background-color.dark {
+  background-color: #FFFFFF;
+}
+
+.tertiary-background-color.light {
+  background-color: #31246D;
+}
+
+.quaternary-background-color.dark {
+  background-color: #000;
+}
+
+.quaternary-background-color.light {
+  background-color: #31246D;
+}
+
+.primary-border-color.dark {
+  border-color: #31246D;
+}
+
+.primary-border-color.light {
+  border-color: #8882BC;
+}
+
+.primary-text-box-background-color.dark {
+  background-color: #1E1E1E;
+}
+
+.primary-text-box-background-color.light {
+  background-color: #C6BDF2;
+}
+
+.text-color.dark {
+  color: #FFFFFF;
+}
+
+.text-color.light {
+  color: #000000;
+}
+
+.h1-title-font {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.text-input-font {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-0 {
+  margin: 0;
+}
+
+.border-0 {
+  border: 0;
+}
+
+.padding-0 {
+  padding: 0;
+}
+
+.w-100vw {
+  width: 100vw;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row.flex-horizontal-center {
+  justify-content: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column.flex-horizontal-center {
+  align-items: center;
+}
+
+.border-box {
+  box-sizing: border-box;
+}

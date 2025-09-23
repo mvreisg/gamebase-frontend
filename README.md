@@ -1,35 +1,21 @@
-# Gamebase-Backend
+# Gamebase-Frontend
 
-A simple frontend for the Gamebase API.
+A simple frontend application for the Gamebase API.
 
-## Run with Docker
+Using [Vite](https://vite.dev/) and [TypeScript](https://www.typescriptlang.org/).
 
-### Run 
-
-If you have Docker installed, run
-
-```
-docker-compose up --build -d
-```
-
-or:
-
-```
-docker compose up --build -d
-```
-
-It will depends on your Docker version.
-
-After that, just access [localhost:8081](http://localhost:8081/) on your client.
-
-## Run locally
+## Running with Docker
 
 ### Setup
 
-- Make sure you have Nginx installed.
-- Clone the project.
-- Add the `default.conf` on your Nginx configuration folder.
+Not implemented yet.
 
-### Run 
+## Commands
 
-After that, just access [localhost:8081](http://localhost:8081/) on your client.
+See `package.json` on the project root folder.
+
+```
+npm run dev
+```
+
+Starts the server!
