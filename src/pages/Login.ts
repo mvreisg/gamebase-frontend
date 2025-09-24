@@ -1,11 +1,15 @@
-import { createDiv } from '../tools/element-creator';
+import { createDiv } from '../tools/elements';
 import LoginForm from '../components/LoginForm';
-import type { ElementInterface } from '../interfaces/interfaces';
-import { get } from '../tools/theme-manager';
-import type { Themes } from '../enums/enums';
+import type { ApplicationContext } from '../interfaces/interfaces';
+import { changeThemeClasses } from '../tools/themes';
 
-export default function Login(elementInterface: ElementInterface): HTMLElement {    
-    const theme: Themes = get();
+export default function Login(applicationContext: ApplicationContext): HTMLElement {    
+    applicationContext.subscribeToThemeListening(() => {
+        changeThemeClasses(backgroundContainer);        
+    });
+
+    const theme = applicationContext.getTheme();    
+        
     const backgroundContainer: HTMLDivElement = createDiv(
         'login-background-container',
         [
@@ -19,7 +23,7 @@ export default function Login(elementInterface: ElementInterface): HTMLElement {
     );
 
     backgroundContainer.append(
-        LoginForm(elementInterface)
+        LoginForm(applicationContext)
     );
 
     return backgroundContainer;

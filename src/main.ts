@@ -1,20 +1,27 @@
 import './style.css'
 import Login from './pages/Login.ts';
-import type { ElementInterface } from './interfaces/interfaces.ts';
-import { create } from './tools/theme-manager.ts';
-import { change } from './tools/theme-changer.ts';
+import type { ApplicationContext } from './interfaces/interfaces.ts';
+import { create, get, notify, set, subscribe } from './tools/themes.ts';
 
 try{    
-  const pathname: string = window.location.pathname;
-  let element: HTMLElement;
-  const elementInterface: ElementInterface = {
-    themeChanger: () => change(document.querySelector<HTMLElement>('#app'))
-  };
   create();
+
+  let element: HTMLElement;
+
+  const applicationContext: ApplicationContext = {
+    setTheme: (theme) => {
+      set(theme);
+      notify();
+    },
+    getTheme: () => get(),
+    subscribeToThemeListening: (callback) => subscribe(callback)
+  };
+  
+  const pathname: string = window.location.pathname;
   switch(pathname){
     case '/':
     case '/login':
-      element = Login(elementInterface);
+      element = Login(applicationContext);
       break;
     default:
       throw new Error('undefined pathname: ' + pathname);

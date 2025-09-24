@@ -26,6 +26,32 @@ export const createH1 = function(
     }
 }
 
+export const createParagraph = function(
+    id?: string|undefined, 
+    classes?: string[]|undefined,
+    style?: CSSStyle|undefined,
+    textContent?: string|undefined
+): HTMLParagraphElement {
+    try{
+        const element: HTMLParagraphElement = document.createElement('p');
+        if (id){
+            element.id = id;
+        }
+        if (classes){
+            element.className = classes.join(' ');
+        }    
+        if (textContent){
+            element.textContent = textContent;
+        }    
+        if (style){        
+            Object.assign(element.style, style);                
+        }
+        return element;
+    } catch (e){
+        throw e;
+    }
+}
+
 export const createDiv = function(
     id?: string|undefined, 
     classes?: string[]|undefined,
@@ -61,6 +87,33 @@ export const createTextInput = function(
     try{
         const element: HTMLInputElement = document.createElement('input');
         element.type = 'text';
+        if (id){
+            element.id = id;
+        }
+        if (classes){
+            element.className = classes.join(' ');
+        }    
+        if (textContent){
+            element.textContent = textContent;
+        }    
+        if (style){        
+            Object.assign(element.style, style);                
+        }
+        return element;
+    } catch (e){
+        throw e;
+    }
+}
+
+export const createCheckInput = function(
+    id?: string|undefined, 
+    classes?: string[]|undefined,
+    style?: CSSStyle|undefined,
+    textContent?: string|undefined
+): HTMLInputElement{
+    try{
+        const element: HTMLInputElement = document.createElement('input');
+        element.type = 'checkbox';
         if (id){
             element.id = id;
         }

@@ -1,11 +1,15 @@
-import type { Themes } from "../../enums/enums";
-import type { ElementInterface } from "../../interfaces/interfaces";
-import { createDiv } from "../../tools/element-creator";
-import { get } from "../../tools/theme-manager";
+import type { ApplicationContext } from "../../interfaces/interfaces";
+import { createDiv } from "../../tools/elements";
+import { changeThemeClasses } from "../../tools/themes";
 import Title from "../Title";
 
-export default function LoginFormTitle(elementInterface: ElementInterface){
-    const theme: Themes = get();
+export default function LoginFormTitle(applicationContext: ApplicationContext){
+    applicationContext.subscribeToThemeListening(() => {
+        changeThemeClasses(containerDiv);        
+    });
+
+    const theme = applicationContext.getTheme();    
+
     const containerDiv: HTMLDivElement = createDiv(
         'login-form-title-container-div',
         [
@@ -18,7 +22,7 @@ export default function LoginFormTitle(elementInterface: ElementInterface){
     );
 
     containerDiv.append(
-        Title(elementInterface)
+        Title(applicationContext)
     );
 
     return containerDiv;

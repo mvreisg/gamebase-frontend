@@ -6,6 +6,10 @@ h1 {
   margin: 0;
 }
 
+p {
+  margin: 0;
+}
+
 .primary-background-color.dark {
   background-color: #0A0217;
 }
@@ -46,12 +50,28 @@ h1 {
   border-color: #8882BC;
 }
 
-.primary-text-box-background-color.dark {
+.primary-input-background-color.dark {
   background-color: #1E1E1E;
 }
 
-.primary-text-box-background-color.light {
+.primary-input-background-color.light {
   background-color: #C6BDF2;
+}
+
+.primary-input-fill-color.dark {
+  background-color: #31246D;
+}
+
+.primary-input-fill-color.light {
+  background-color: #8882BC;
+}
+
+.primary-input-warning-fill-color.dark {
+  background-color: #5B1A1A;
+}
+
+.primary-input-warning-fill-color.light {
+  background-color: #F2BDBE;
 }
 
 .text-color.dark {
@@ -74,8 +94,26 @@ h1 {
   font-weight: 400;
 }
 
+.warning-text-color.dark {
+  color: #FF0000;
+}
+
+.warning-text-color.light {
+  color: #FF0000;
+}
+
+.paragraph-font {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;  
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.appearance-none {
+  appearance: none;
 }
 
 .margin-0 {
@@ -100,6 +138,10 @@ h1 {
 
 .h-100vh {
   height: 100vh;
+}
+
+.h-100 {
+  height: 100%;
 }
 
 .position-relative {
@@ -127,12 +169,24 @@ h1 {
   justify-content: center;
 }
 
+.flex-row.flex-vertical-center {
+  align-items: center;  
+}
+
+.flex-row.flex-space-between {
+  justify-content: space-between;
+}
+
 .flex-column {
   flex-direction: column;
 }
 
 .flex-column.flex-horizontal-center {
   align-items: center;
+}
+
+.flex-column.flex-space-between {
+  justify-content: space-between;
 }
 
 .border-box {

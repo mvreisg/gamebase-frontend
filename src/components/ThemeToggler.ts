@@ -1,13 +1,28 @@
-import { Themes } from "../enums/enums";
-import type { ElementInterface } from "../interfaces/interfaces";
-import { createButton, createDiv, createImageFromSvg } from "../tools/element-creator";
-import { get, set } from "../tools/theme-manager";
+import type { ApplicationContext } from "../interfaces/interfaces";
+import { createButton, createDiv, createImageFromSvg } from "../tools/elements";
 import lightModeSymbolSvg from './../assets/light-mode-symbol.svg';
 import darkModeSymbolSvg from './../assets/dark-mode-symbol.svg';
 import { percent, pxToRem } from "../tools/measures";
+import type { Themes } from "../types/types";
 
-export default function ThemeToggler(elementInterface: ElementInterface){
-    const theme: Themes = get();    
+export default function ThemeToggler(applicationContext: ApplicationContext){
+    applicationContext.subscribeToThemeListening((theme: Themes) => {
+        switch(theme){
+             default:
+                throw new Error('Untreated theme: ' + theme);
+            case 'light':
+                themeModeSymbolImage.src = darkModeSymbolSvg;
+                roundedClickableButton.style.left = percent(50);
+                break;
+            case 'dark':
+                themeModeSymbolImage.src = lightModeSymbolSvg;                
+                roundedClickableButton.style.left = percent(-50);
+                break;
+        }   
+    });
+
+    const theme = applicationContext.getTheme();
+
     const containerDiv: HTMLDivElement = createDiv(        
         'theme-toggler-container-div',
         [
@@ -55,13 +70,14 @@ export default function ThemeToggler(elementInterface: ElementInterface){
             padding: '0'
         }
     );
+    
     switch(theme){
         default:
             throw new Error('Untreated theme: ' + theme);
-        case Themes.LIGHT:
+        case 'light':
             roundedClickableButton.style.left = percent(50);
             break;
-        case Themes.DARK:
+        case 'dark':
             roundedClickableButton.style.left = percent(-50);
             break;
     }      
@@ -82,61 +98,38 @@ export default function ThemeToggler(elementInterface: ElementInterface){
         }
     );    
 
-    let themeModeSymbolImage: HTMLImageElement;
+    let themeModeSymbolSvg;
     switch(theme){
         default:
             throw new Error('Untreated theme: ' + theme);
-        case Themes.LIGHT:
-            themeModeSymbolImage = createImageFromSvg(
-                lightModeSymbolSvg,
-                'theme-toggler-symbol-image',
-                [
-                    theme
-                ],        
-            );
-            break;
-        case Themes.DARK:
-            themeModeSymbolImage = createImageFromSvg(
-                darkModeSymbolSvg,
-                'theme-toggler-symbol-image',
-                [
-                    theme
-                ],        
-            );
-            break;
+        case 'light':
+            themeModeSymbolSvg = darkModeSymbolSvg;
+            break;            
+        case 'dark':
+            themeModeSymbolSvg = lightModeSymbolSvg;
+            break;        
     }  
-    
+
+    const themeModeSymbolImage = createImageFromSvg(
+        themeModeSymbolSvg,
+        'theme-mode-symbol-image',
+        [
+            theme
+        ],        
+    );
 
     roundedClickableButton.addEventListener('click', () => {
-        console.log('a');
-        const theme: Themes = get();
+        const theme = applicationContext.getTheme();
         switch(theme){
             default:
                 throw new Error('Untreated theme: ' + theme);
-            case Themes.LIGHT:
-                set(Themes.DARK);
-                break;
-            case Themes.DARK:
-                set(Themes.LIGHT);
-                break;
+            case 'light':
+                applicationContext.setTheme('dark');
+                return;
+            case 'dark':
+                applicationContext.setTheme('light');
+                return;
         }        
-        elementInterface.themeChanger();
-        const themeTogglerSymbolImage: HTMLImageElement|null = document.querySelector('#theme-toggler-symbol-image');
-        if (themeTogglerSymbolImage === null || themeTogglerSymbolImage === undefined){
-            throw new Error('Theme toggler symbol image not found!');
-        }
-        switch(get()){
-            default:
-                throw new Error('Untreated theme: ' + theme);
-            case Themes.LIGHT:
-                themeTogglerSymbolImage.src = lightModeSymbolSvg;
-                roundedClickableButton.style.left = percent(50);
-                break;
-            case Themes.DARK:
-                themeTogglerSymbolImage.src = darkModeSymbolSvg;
-                roundedClickableButton.style.left = percent(-50);
-                break;
-        }     
     });
 
     internalRoundedDiv.append(

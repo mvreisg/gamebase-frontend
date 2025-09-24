@@ -1,10 +1,15 @@
-import type { Themes } from "../enums/enums";
-import type { ElementInterface } from "../interfaces/interfaces";
-import { createH1 } from "../tools/element-creator";
-import { get } from "../tools/theme-manager";
+import type { ApplicationContext } from "../interfaces/interfaces";
+import { createH1 } from "../tools/elements";
+import { changeThemeClasses } from "../tools/themes";
+import type { Themes } from "../types/types";
 
-export default function Title(elementInterface: ElementInterface){
-    const theme: Themes = get();
+export default function Title(applicationContext: ApplicationContext){
+    applicationContext.subscribeToThemeListening(() => {
+        changeThemeClasses(h1);        
+    });
+
+    const theme: Themes = applicationContext.getTheme();
+
     const h1: HTMLHeadingElement = createH1(
         'login-form-title',
         [

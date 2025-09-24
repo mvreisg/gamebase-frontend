@@ -1,9 +1,9 @@
-import type { ElementInterface } from "../../interfaces/interfaces";
-import { createDiv } from "../../tools/element-creator";
+import type { ApplicationContext } from "../../interfaces/interfaces";
+import { createDiv } from "../../tools/elements";
 import { pxToRem } from "../../tools/measures";
 import ThemeToggler from "../ThemeToggler";
 
-export default function LoginFormThemeToggler(elementInterface: ElementInterface){
+export default function LoginFormThemeToggler(applicationContext: ApplicationContext){
     const container = createDiv(
         'login-form-theme-toggler-container',
         [],
@@ -14,7 +14,7 @@ export default function LoginFormThemeToggler(elementInterface: ElementInterface
     );
 
     container.append(
-        ThemeToggler(elementInterface)
+        ThemeToggler(applicationContext)
     )
 
     return container;

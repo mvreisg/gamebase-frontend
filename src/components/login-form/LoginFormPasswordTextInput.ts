@@ -2,18 +2,21 @@ import type { LoginFormContext } from "../../interfaces/interfaces";
 import { createDiv, createParagraph, createTextInput } from "../../tools/elements";
 import { percent, pxToRem } from "../../tools/measures";
 import { changeThemeClasses } from "../../tools/themes";
-import type { PasswordValidation } from "../../types/types";
+import type { PasswordValidation, PasswordVisibility } from "../../types/types";
+import LoginFormPasswordVisibilityButton from "./LoginFormPasswordVisibilityButton";
 
-export default function LoginFormUsernameTextInput(applicationContext: LoginFormContext){
+export default function LoginFormPasswordTextInput(applicationContext: LoginFormContext){
+    let visibility: PasswordVisibility = 'hidden' as PasswordVisibility;
+
     applicationContext.subscribeToThemeListening(() => {
-        changeThemeClasses(backgroundContainer);        
-        changeThemeClasses(textInput);        
-        changeThemeClasses(warningParagraph);        
-    });
+        changeThemeClasses(backgroundContainer);       
+        changeThemeClasses(textInput);       
+        changeThemeClasses(warningParagraph);       
+    });    
 
     const theme = applicationContext.getTheme();    
 
-    const usernameListener = function(state: PasswordValidation){
+    const passwordListener = function(state: PasswordValidation){
         let backgroundContainerClasses = [];
         let inputClasses = [];
         switch(state){
@@ -44,19 +47,33 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
         }
     }
 
-    applicationContext.subscribeToUsernameListening(usernameListener)
+    applicationContext.subscribeToPasswordListening(passwordListener);
+
+    const setVisibility = function(){
+        switch(visibility){
+            default:
+                throw new Error('Untreated visibility: ' + visibility);
+            case 'hidden':
+                textInput.type = 'password';
+                break;
+            case 'showing':
+                textInput.type = 'text';
+                break;                        
+        }
+    }
 
     const backgroundContainer: HTMLDivElement = createDiv(
-        'login-form-username-text-input-background-container',
+        'login-form-password-text-input-background-container',
         [
             theme,               
             'primary-border-color',
-            'w-100',
-            'border-box',
-            'position-relative',
+            'primary-input-background-color',
             'flex',
             'flex-row',
-            'flex-vertical-center',            
+            'flex-vertical-center',
+            'w-100',
+            'border-box',
+            'position-relative'
         ],
         {
             height: pxToRem(50),
@@ -66,10 +83,14 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
         }
     );
 
+    const getValue = function(): string {
+        return textInput.value;
+    }    
+
     const textInput: HTMLInputElement = createTextInput(
-        'login-form-username-text-input',
+        'login-form-password-text-input',
         [
-            theme,               
+            theme,
             'border-box',
             'border-0',
             'padding-0',
@@ -84,15 +105,12 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
             padding: pxToRem(11)
         }
     );
-
-    const getValue = function(): string {
-        return textInput.value;
-    }
+    setVisibility();
 
     const warningParagraph: HTMLParagraphElement = createParagraph(
-        'login-form-username-warning-paragraph',
+        'login-form-password-warning-paragraph',
         [
-            theme,               
+            theme,
             'position-absolute',
             'paragraph-font',
             'warning-text-color'
@@ -100,7 +118,7 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
         {
             left: pxToRem(11)
         },
-        'O username não foi informado!'
+        'O password não foi informado!'
     );
 
     const setWarningParagraphVisibility = function(isVisible: boolean): void{
@@ -111,7 +129,7 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
     const validateInput = function(){
         const isEmpty: boolean = getValue().length === 0;
         setWarningParagraphVisibility(isEmpty);
-        applicationContext.setIsUsernameValid(isEmpty === false);            
+        applicationContext.setIsPasswordValid(isEmpty === false);            
     }
     
     warningParagraph.addEventListener('click', () => {
@@ -162,7 +180,7 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
 
     textInput.addEventListener('focusout', () => {
         validateInput();
-    });      
+    });    
 
     backgroundContainer.append(
         textInput
@@ -170,6 +188,23 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
 
     backgroundContainer.append(
         warningParagraph
+    );
+
+    backgroundContainer.append(
+        LoginFormPasswordVisibilityButton({
+            getTheme: applicationContext.getTheme,
+            setTheme: applicationContext.setTheme,
+            subscribeToThemeListening: applicationContext.subscribeToThemeListening,
+            visibilityChange: () => {
+                visibility = visibility === 'hidden' ? 'showing' : 'hidden';
+                setVisibility();    
+            },
+            getVisibility: () => visibility,
+            setIsPasswordValid: applicationContext.setIsPasswordValid,
+            subscribeToPasswordListening: applicationContext.subscribeToPasswordListening,
+            setIsUsernameValid: applicationContext.setIsUsernameValid,
+            subscribeToUsernameListening: applicationContext.subscribeToUsernameListening
+        })
     );
 
     return backgroundContainer;

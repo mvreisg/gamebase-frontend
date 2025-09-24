@@ -1,3 +1,11 @@
+export type Themes = 'light' | 'dark';
+
+export type PasswordVisibility = 'showing' | 'hidden';
+
+export type PasswordValidation = 'valid' | 'invalid';
+
+export type UsernameValidation = 'valid' | 'invalid';
+
 export type CSSStyle = {
     width?: string|undefined,
     height?: string|undefined,
@@ -13,5 +21,6 @@ export type CSSStyle = {
     top?: string|undefined,
     bottom?: string|undefined,
     left?: string|undefined,
-    right?: string|undefined,    
+    right?: string|undefined,
+    columnGap?: string|undefined,
 }
