@@ -4,6 +4,7 @@ import lightModeSymbolSvg from './../assets/light-mode-symbol.svg';
 import darkModeSymbolSvg from './../assets/dark-mode-symbol.svg';
 import { percent, pxToRem } from "../tools/measures";
 import type { Themes } from "../types/types";
+import { changeThemeClasses } from "../tools/themes";
 
 export default function ThemeToggler(applicationContext: ApplicationContext){
     applicationContext.subscribeToThemeListening((theme: Themes) => {
@@ -18,7 +19,12 @@ export default function ThemeToggler(applicationContext: ApplicationContext){
                 themeModeSymbolImage.src = lightModeSymbolSvg;                
                 roundedClickableButton.style.left = percent(-50);
                 break;
-        }   
+        }
+        changeThemeClasses(containerDiv);   
+        changeThemeClasses(barDiv);   
+        changeThemeClasses(roundedClickableButton);   
+        changeThemeClasses(internalRoundedDiv);   
+        changeThemeClasses(themeModeSymbolImage);   
     });
 
     const theme = applicationContext.getTheme();
