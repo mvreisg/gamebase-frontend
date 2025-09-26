@@ -1,6 +1,10 @@
-import type { ApplicationContext, CheckInputElementProperties, ElementParameters } from "../interfaces/interfaces";
-import { createCheckInput } from "../tools/elements";
-import { changeThemeClasses } from "../tools/themes";
+import type {
+    ApplicationContext,
+    CheckInputElementProperties,
+    ElementParameters,
+} from '../interfaces/interfaces';
+import { createCheckInput } from '../tools/elements';
+import { changeThemeClasses } from '../tools/themes';
 
 export default function CheckInput(
     applicationContext: ApplicationContext,
@@ -16,21 +20,23 @@ export default function CheckInput(
         elementParameters.id,
         elementParameters.classes,
         elementParameters.styles
-    );  
+    );
 
-    const setChecked = function(value: boolean){
+    const setChecked = function (value: boolean) {
         checked = value;
-    }
+    };
 
-    const getChecked = function(): boolean {
+    const getChecked = function (): boolean {
         return checked;
-    }
+    };
 
     input.addEventListener('click', () => {
         setChecked(input.checked);
         let classes = input.className.split(' ');
-        classes = classes.filter((value) => value !== 'primary-input-fill-color');
-        if (getChecked()){
+        classes = classes.filter(
+            (value) => value !== 'primary-input-fill-color'
+        );
+        if (getChecked()) {
             classes.push('primary-input-fill-color');
         }
         input.className = classes.join(' ');
@@ -38,11 +44,11 @@ export default function CheckInput(
 
     setChecked(input.checked);
 
-    return { 
+    return {
         element: input,
         methods: {
             getChecked,
-            setChecked
-        }
+            setChecked,
+        },
     };
 }

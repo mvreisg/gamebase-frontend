@@ -1,13 +1,17 @@
-import type { ApplicationContext, TitleElementParameters, ElementProperties } from "../interfaces/interfaces";
-import { createH1 } from "../tools/elements";
-import { changeThemeClasses } from "../tools/themes";
+import type {
+    ApplicationContext,
+    TitleElementParameters,
+    ElementProperties,
+} from '../interfaces/interfaces';
+import { createH1 } from '../tools/elements';
+import { changeThemeClasses } from '../tools/themes';
 
 export default function Title(
     applicationContext: ApplicationContext,
     elementParameters: TitleElementParameters
 ): ElementProperties {
     applicationContext.subscribeToThemeListening(() => {
-        changeThemeClasses(h1);        
+        changeThemeClasses(h1);
     });
 
     const h1: HTMLHeadingElement = createH1(
@@ -18,6 +22,6 @@ export default function Title(
     );
 
     return {
-        element: h1
+        element: h1,
     };
 }

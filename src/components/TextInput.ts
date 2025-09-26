@@ -1,9 +1,13 @@
-import type { ElementParameters, LoginFormContext, TextInputElementProperties } from "../interfaces/interfaces";
-import { createTextInput } from "../tools/elements";
-import { changeThemeClasses } from "../tools/themes";
+import type {
+    ElementParameters,
+    LoginFormContext,
+    TextInputElementProperties,
+} from '../interfaces/interfaces';
+import { createTextInput } from '../tools/elements';
+import { changeThemeClasses } from '../tools/themes';
 
 export default function TextInput(
-    applicationContext: LoginFormContext, 
+    applicationContext: LoginFormContext,
     elementParameterProperties: ElementParameters
 ): TextInputElementProperties {
     applicationContext.subscribeToThemeListening(() => {
@@ -16,14 +20,14 @@ export default function TextInput(
         elementParameterProperties.styles
     );
 
-    const getValue = function(): string {
+    const getValue = function (): string {
         return textInput.value;
-    }
+    };
 
     return {
         element: textInput,
         methods: {
-            getValue
-        }
+            getValue,
+        },
     };
 }

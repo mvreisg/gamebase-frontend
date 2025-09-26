@@ -1,6 +1,10 @@
-import type { ApplicationContext, ElementParameters, ElementProperties } from "../interfaces/interfaces";
-import { createDiv } from "../tools/elements";
-import { changeThemeClasses } from "../tools/themes";
+import type {
+    ApplicationContext,
+    ElementParameters,
+    ElementProperties,
+} from '../interfaces/interfaces';
+import { createDiv } from '../tools/elements';
+import { changeThemeClasses } from '../tools/themes';
 
 export default function Filler(
     applicationContext: ApplicationContext,
@@ -8,7 +12,7 @@ export default function Filler(
 ): ElementProperties {
     applicationContext.subscribeToThemeListening(() => {
         changeThemeClasses(div);
-    })
+    });
 
     const div = createDiv(
         elementParameters.id,
@@ -17,6 +21,6 @@ export default function Filler(
     );
 
     return {
-        element: div
-    }
+        element: div,
+    };
 }

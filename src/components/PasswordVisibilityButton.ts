@@ -1,11 +1,15 @@
-import type { ElementParameters, PasswordVisibilityButtonContext, PasswordVisibilityButtonElementProperties } from "../interfaces/interfaces";
-import { createButton, createImageFromSvg } from "../tools/elements";
-import darkShowPasswordSymbol from './../assets/dark-show-password-symbol.svg';
+import type {
+    ElementParameters,
+    PasswordVisibilityButtonContext,
+    PasswordVisibilityButtonElementProperties,
+} from '../interfaces/interfaces';
+import { createButton, createImageFromSvg } from '../tools/elements';
+import { changeThemeClasses } from '../tools/themes';
+import type { Themes } from '../types/types';
 import darkHidePasswordSymbol from './../assets/dark-hide-password-symbol.svg';
-import lightShowPasswordSymbol from './../assets/light-show-password-symbol.svg';
+import darkShowPasswordSymbol from './../assets/dark-show-password-symbol.svg';
 import lightHidePasswordSymbol from './../assets/light-hide-password-symbol.svg';
-import type { Themes } from "../types/types";
-import { changeThemeClasses } from "../tools/themes";
+import lightShowPasswordSymbol from './../assets/light-show-password-symbol.svg';
 
 export default function PasswordVisibilityButton(
     applicationContext: PasswordVisibilityButtonContext,
@@ -22,23 +26,23 @@ export default function PasswordVisibilityButton(
         elementParameters.classes,
         elementParameters.styles,
         undefined,
-        'button'      
+        'button'
     );
 
     applicationContext.subscribeToThemeListening(() => {
         setSvg();
     });
 
-    const setSvg = function(){
+    const setSvg = function () {
         const visibility = applicationContext.getVisibility();
         const theme = applicationContext.getTheme();
-        switch(visibility){
+        switch (visibility) {
             default:
                 throw new Error('Untreated password visibility: ' + visibility);
             case 'hidden':
-                switch(theme){
+                switch (theme) {
                     default:
-                        throw new Error('Untreated theme: ' + theme);                    
+                        throw new Error('Untreated theme: ' + theme);
                     case 'dark':
                         passwordSymbolImage.src = darkShowPasswordSymbol;
                         break;
@@ -48,9 +52,9 @@ export default function PasswordVisibilityButton(
                 }
                 break;
             case 'visible':
-                switch(theme){
+                switch (theme) {
                     default:
-                        throw new Error('Untreated theme: ' + theme);                    
+                        throw new Error('Untreated theme: ' + theme);
                     case 'dark':
                         passwordSymbolImage.src = darkHidePasswordSymbol;
                         break;
@@ -59,57 +63,59 @@ export default function PasswordVisibilityButton(
                         break;
                 }
                 break;
-        }    
-    }
+        }
+    };
 
     button.addEventListener('click', () => {
         const visibility = applicationContext.getVisibility();
-        applicationContext.setVisibility(visibility === 'hidden' ? 'visible' : 'hidden');
+        applicationContext.setVisibility(
+            visibility === 'hidden' ? 'visible' : 'hidden'
+        );
         setSvg();
     });
 
-    let passwordSymbolImage: HTMLImageElement;
-    const visibility = applicationContext.getVisibility();    
+    const visibility = applicationContext.getVisibility();
     let passwordSymbolImageSvg;
-    switch(visibility){
+    switch (visibility) {
         default:
             throw new Error('Untreated password visibility: ' + visibility);
         case 'hidden':
-            switch(theme){
+            switch (theme) {
                 default:
-                    throw new Error('Untreated theme: ' + theme);                    
+                    throw new Error('Untreated theme: ' + theme);
                 case 'dark':
                     passwordSymbolImageSvg = darkShowPasswordSymbol;
                     break;
                 case 'light':
-                    passwordSymbolImageSvg = lightShowPasswordSymbol;                    
+                    passwordSymbolImageSvg = lightShowPasswordSymbol;
                     break;
             }
             break;
         case 'visible':
-            switch(theme){
+            switch (theme) {
                 default:
-                    throw new Error('Untreated theme: ' + theme);                    
+                    throw new Error('Untreated theme: ' + theme);
                 case 'dark':
-                    passwordSymbolImageSvg = darkHidePasswordSymbol; 
+                    passwordSymbolImageSvg = darkHidePasswordSymbol;
                     break;
                 case 'light':
-                    passwordSymbolImageSvg = lightHidePasswordSymbol;  
+                    passwordSymbolImageSvg = lightHidePasswordSymbol;
                     break;
             }
             break;
-    }    
-    passwordSymbolImage = createImageFromSvg(
+    }
+
+    const passwordSymbolImage: HTMLImageElement = createImageFromSvg(
         passwordSymbolImageSvg,
-        'password-visibility-button-symbol-image',
-    );    
+        'password-visibility-button-symbol-image'
+    );
 
     button.append(passwordSymbolImage);
 
     return {
         element: button,
         methods: {
-            setSvg
-        }
+            setSvg,
+        },
     };
 }

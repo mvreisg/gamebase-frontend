@@ -1,7 +1,11 @@
-import type { ApplicationContext, CheckInputElementProperties, ElementParameters } from "../../interfaces/interfaces";
-import { createLabel } from "../../tools/elements";
-import { changeThemeClasses } from "../../tools/themes";
-import CheckInput from "../CheckInput";
+import type {
+    ApplicationContext,
+    CheckInputElementProperties,
+    ElementParameters,
+} from '../../interfaces/interfaces';
+import { createLabel } from '../../tools/elements';
+import { changeThemeClasses } from '../../tools/themes';
+import CheckInput from '../CheckInput';
 
 export default function LoginFormOneWeekReminderCheckInput(
     applicationContext: ApplicationContext,
@@ -19,27 +23,22 @@ export default function LoginFormOneWeekReminderCheckInput(
         elementParameters.styles
     );
 
-    const checkInput = CheckInput(
-        applicationContext,
-        {
-            id: 'login-form-one-week-reminder-check-input',
-            classes: [
-                theme,
-                'w-100',
-                'h-100',
-                'margin-0',
-                'appearance-none',
-                'cursor-pointer'
-            ]
-        }
-    );
+    const checkInput = CheckInput(applicationContext, {
+        id: 'login-form-one-week-reminder-check-input',
+        classes: [
+            theme,
+            'w-100',
+            'h-100',
+            'margin-0',
+            'appearance-none',
+            'cursor-pointer',
+        ],
+    });
 
-    label.append(
-        checkInput.element
-    );
+    label.append(checkInput.element);
 
     return {
         element: label,
-        methods: checkInput.methods
+        methods: checkInput.methods,
     };
 }

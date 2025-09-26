@@ -1,28 +1,29 @@
-import type { ElementParameters, LoginFormContext, TextInputElementProperties } from "../../interfaces/interfaces";
-import { changeThemeClasses } from "../../tools/themes";
-import TextInput from "../TextInput";
+import type {
+    ElementParameters,
+    LoginFormContext,
+    TextInputElementProperties,
+} from '../../interfaces/interfaces';
+import { changeThemeClasses } from '../../tools/themes';
+import TextInput from '../TextInput';
 
 export default function LoginFormTextInput(
-    applicationContext: LoginFormContext, 
+    applicationContext: LoginFormContext,
     elementParameters: ElementParameters
 ): TextInputElementProperties {
     applicationContext.subscribeToThemeListening(() => {
-        changeThemeClasses(textInput.element);        
+        changeThemeClasses(textInput.element);
     });
 
-    const textInput = TextInput(
-        applicationContext,
-        elementParameters,              
-    );
+    const textInput = TextInput(applicationContext, elementParameters);
 
-    const getValue = function(): string {
+    const getValue = function (): string {
         return textInput.methods.getValue();
-    }
+    };
 
     return {
         element: textInput.element,
         methods: {
-            getValue
-        }      
+            getValue,
+        },
     };
 }
