@@ -1,6 +1,8 @@
 export type Themes = 'light' | 'dark';
 
-export type PasswordVisibility = 'showing' | 'hidden';
+export type WarningParagraphVisibility = 'visible' | 'hidden'
+
+export type PasswordVisibility = 'visible' | 'hidden';
 
 export type PasswordValidation = 'valid' | 'invalid';
 

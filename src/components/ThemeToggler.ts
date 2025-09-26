@@ -1,12 +1,15 @@
-import type { ApplicationContext } from "../interfaces/interfaces";
-import { createButton, createDiv, createImageFromSvg } from "../tools/elements";
+import type { ApplicationContext, ElementParameters, ElementProperties } from "../interfaces/interfaces";
+import { createButton, createDiv, createImageFromSvg, createLabel } from "../tools/elements";
 import lightModeSymbolSvg from './../assets/light-mode-symbol.svg';
 import darkModeSymbolSvg from './../assets/dark-mode-symbol.svg';
 import { percent, pxToRem } from "../tools/measures";
 import type { Themes } from "../types/types";
 import { changeThemeClasses } from "../tools/themes";
 
-export default function ThemeToggler(applicationContext: ApplicationContext){
+export default function ThemeToggler(
+    applicationContext: ApplicationContext,
+    elementParameters: ElementParameters
+): ElementProperties {
     applicationContext.subscribeToThemeListening((theme: Themes) => {
         switch(theme){
              default:
@@ -20,7 +23,7 @@ export default function ThemeToggler(applicationContext: ApplicationContext){
                 roundedClickableButton.style.left = percent(-50);
                 break;
         }
-        changeThemeClasses(containerDiv);   
+        changeThemeClasses(container);   
         changeThemeClasses(barDiv);   
         changeThemeClasses(roundedClickableButton);   
         changeThemeClasses(internalRoundedDiv);   
@@ -29,18 +32,10 @@ export default function ThemeToggler(applicationContext: ApplicationContext){
 
     const theme = applicationContext.getTheme();
 
-    const containerDiv: HTMLDivElement = createDiv(        
-        'theme-toggler-container-div',
-        [
-            theme,
-            'position-relative',
-            'flex',
-            'flex-center'
-        ],
-        {
-            width: pxToRem(44),
-            height: pxToRem(28)
-        }
+    const container: HTMLLabelElement = createLabel(
+        elementParameters.id,
+        elementParameters.classes,
+        elementParameters.styles
     );
 
     const barDiv: HTMLDivElement = createDiv(
@@ -74,7 +69,9 @@ export default function ThemeToggler(applicationContext: ApplicationContext){
             top: percent(-50),            
             borderWidth: '0',
             padding: '0'
-        }
+        },
+        undefined,
+        'button'      
     );
     
     switch(theme){
@@ -150,9 +147,11 @@ export default function ThemeToggler(applicationContext: ApplicationContext){
         roundedClickableButton
     );
 
-    containerDiv.append(
+    container.append(
         barDiv
     );
 
-    return containerDiv;
+    return {
+        element: container
+    };
 }

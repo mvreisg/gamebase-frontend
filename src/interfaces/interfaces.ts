@@ -1,4 +1,4 @@
-import type { PasswordVisibility, Themes } from "../types/types";
+import type { CSSStyle, PasswordVisibility, Themes, WarningParagraphVisibility } from "../types/types";
 
 export interface ApplicationContext {
     getTheme(): Themes;
@@ -7,7 +7,7 @@ export interface ApplicationContext {
 }
 
 export interface PasswordVisibilityButtonContext extends ApplicationContext {
-    visibilityChange(): void,
+    setVisibility(value: PasswordVisibility): void,
     getVisibility(): PasswordVisibility
 }
 
@@ -19,6 +19,50 @@ export interface LoginFormContext extends ApplicationContext {
 }
 
 export interface LoginFormPasswordVisibilityButtonContext extends LoginFormContext {
-    visibilityChange(): void,
+    setVisibility(value: PasswordVisibility): void,
     getVisibility(): PasswordVisibility
+}
+
+export interface ElementParameters {
+    id?: string,    
+    classes?: string[]|undefined,
+    styles?: CSSStyle|undefined
+}
+
+export interface TitleElementParameters extends ElementParameters {
+    text: string
+}
+
+export interface TextInputWarningParagraphElementParameters extends ElementParameters {
+    text: string
+}
+
+export interface ElementProperties {
+    element: HTMLElement,    
+}
+
+export interface TextInputElementProperties extends ElementProperties {
+    methods: {
+        getValue(): string
+    }
+}
+
+export interface TextInputWarningParagraphElementProperties extends ElementProperties {
+    methods: {
+        getVisibility(): WarningParagraphVisibility,
+        setVisibility(value: WarningParagraphVisibility): void
+    }
+}
+
+export interface PasswordVisibilityButtonElementProperties extends ElementProperties {
+    methods: {
+        setSvg(): void
+    }
+}
+
+export interface CheckInputElementProperties extends ElementProperties {
+    methods: {
+        setChecked(value: boolean): void
+        getChecked(): boolean
+    }
 }

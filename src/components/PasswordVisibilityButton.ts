@@ -1,6 +1,5 @@
-import type { PasswordVisibilityButtonContext } from "../interfaces/interfaces";
+import type { ElementParameters, PasswordVisibilityButtonContext, PasswordVisibilityButtonElementProperties } from "../interfaces/interfaces";
 import { createButton, createImageFromSvg } from "../tools/elements";
-import { pxToRem } from "../tools/measures";
 import darkShowPasswordSymbol from './../assets/dark-show-password-symbol.svg';
 import darkHidePasswordSymbol from './../assets/dark-hide-password-symbol.svg';
 import lightShowPasswordSymbol from './../assets/light-show-password-symbol.svg';
@@ -8,7 +7,10 @@ import lightHidePasswordSymbol from './../assets/light-hide-password-symbol.svg'
 import type { Themes } from "../types/types";
 import { changeThemeClasses } from "../tools/themes";
 
-export default function PasswordVisibilityButton(applicationContext: PasswordVisibilityButtonContext){
+export default function PasswordVisibilityButton(
+    applicationContext: PasswordVisibilityButtonContext,
+    elementParameters: ElementParameters
+): PasswordVisibilityButtonElementProperties {
     applicationContext.subscribeToThemeListening(() => {
         changeThemeClasses(button);
     });
@@ -16,20 +18,11 @@ export default function PasswordVisibilityButton(applicationContext: PasswordVis
     const theme: Themes = applicationContext.getTheme();
 
     const button: HTMLButtonElement = createButton(
-        'password-visibility-button',
-        [
-            theme,
-            'border-0',
-            'padding-0',
-            'primary-input-background-color',
-            'flex',
-            'flex-center',
-            'cursor-pointer'
-        ],
-        {
-            width: pxToRem(25),
-            height: pxToRem(25)
-        }
+        elementParameters.id,
+        elementParameters.classes,
+        elementParameters.styles,
+        undefined,
+        'button'      
     );
 
     applicationContext.subscribeToThemeListening(() => {
@@ -47,18 +40,6 @@ export default function PasswordVisibilityButton(applicationContext: PasswordVis
                     default:
                         throw new Error('Untreated theme: ' + theme);                    
                     case 'dark':
-                        passwordSymbolImage.src = darkHidePasswordSymbol;
-                        break;
-                    case 'light':
-                        passwordSymbolImage.src = lightHidePasswordSymbol;
-                        break;
-                }
-                break;
-            case 'showing':
-                switch(theme){
-                    default:
-                        throw new Error('Untreated theme: ' + theme);                    
-                    case 'dark':
                         passwordSymbolImage.src = darkShowPasswordSymbol;
                         break;
                     case 'light':
@@ -66,11 +47,24 @@ export default function PasswordVisibilityButton(applicationContext: PasswordVis
                         break;
                 }
                 break;
+            case 'visible':
+                switch(theme){
+                    default:
+                        throw new Error('Untreated theme: ' + theme);                    
+                    case 'dark':
+                        passwordSymbolImage.src = darkHidePasswordSymbol;
+                        break;
+                    case 'light':
+                        passwordSymbolImage.src = lightHidePasswordSymbol;
+                        break;
+                }
+                break;
         }    
     }
 
     button.addEventListener('click', () => {
-        applicationContext.visibilityChange();
+        const visibility = applicationContext.getVisibility();
+        applicationContext.setVisibility(visibility === 'hidden' ? 'visible' : 'hidden');
         setSvg();
     });
 
@@ -85,22 +79,22 @@ export default function PasswordVisibilityButton(applicationContext: PasswordVis
                 default:
                     throw new Error('Untreated theme: ' + theme);                    
                 case 'dark':
-                    passwordSymbolImageSvg = darkHidePasswordSymbol;
+                    passwordSymbolImageSvg = darkShowPasswordSymbol;
                     break;
                 case 'light':
-                    passwordSymbolImageSvg = lightHidePasswordSymbol;                    
+                    passwordSymbolImageSvg = lightShowPasswordSymbol;                    
                     break;
             }
             break;
-        case 'showing':
+        case 'visible':
             switch(theme){
                 default:
                     throw new Error('Untreated theme: ' + theme);                    
                 case 'dark':
-                    passwordSymbolImageSvg = darkShowPasswordSymbol; 
+                    passwordSymbolImageSvg = darkHidePasswordSymbol; 
                     break;
                 case 'light':
-                    passwordSymbolImageSvg = lightShowPasswordSymbol;  
+                    passwordSymbolImageSvg = lightHidePasswordSymbol;  
                     break;
             }
             break;
@@ -112,5 +106,10 @@ export default function PasswordVisibilityButton(applicationContext: PasswordVis
 
     button.append(passwordSymbolImage);
 
-    return button;
+    return {
+        element: button,
+        methods: {
+            setSvg
+        }
+    };
 }

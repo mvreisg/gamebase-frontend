@@ -78,6 +78,54 @@ export const createDiv = function(
     }
 }
 
+export const createLabel = function(
+    id?: string|undefined, 
+    classes?: string[]|undefined,
+    style?: CSSStyle|undefined,
+): HTMLLabelElement {
+    try{
+        const element: HTMLLabelElement = document.createElement('label');
+        if (id){
+            element.id = id;
+        }
+        if (classes){
+            element.className = classes.join(' ');
+        }    
+        if (style){        
+            Object.assign(element.style, style);                
+        }
+        return element;
+    } catch (e){
+        throw e;
+    }
+}
+
+export const createForm = function(
+    id?: string|undefined, 
+    classes?: string[]|undefined,
+    style?: CSSStyle|undefined,
+    textContent?: string|undefined
+): HTMLFormElement{
+    try{
+        const element: HTMLFormElement = document.createElement('form');
+        if (id){
+            element.id = id;
+        }
+        if (classes){
+            element.className = classes.join(' ');
+        }    
+        if (textContent){
+            element.textContent = textContent;
+        }    
+        if (style){        
+            Object.assign(element.style, style);                
+        }
+        return element;
+    } catch (e){
+        throw e;
+    }
+}
+
 export const createTextInput = function(
     id?: string|undefined, 
     classes?: string[]|undefined,
@@ -136,7 +184,8 @@ export const createButton = function(
     id?: string|undefined, 
     classes?: string[]|undefined,
     style?: CSSStyle|undefined,
-    textContent?: string|undefined
+    textContent?: string|undefined,
+    type: string = 'button'    
 ): HTMLButtonElement{
     try{
         const element: HTMLButtonElement = document.createElement('button');
@@ -152,6 +201,7 @@ export const createButton = function(
         if (style){        
             Object.assign(element.style, style);                
         }
+        element.type = type as HTMLButtonElement['type'];
         return element;
     } catch (e){
         throw e;

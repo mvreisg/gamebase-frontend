@@ -1,29 +1,44 @@
-import type { ApplicationContext } from "../../interfaces/interfaces";
+import type { ApplicationContext, ElementParameters, ElementProperties } from "../../interfaces/interfaces";
 import { createDiv } from "../../tools/elements";
 import { changeThemeClasses } from "../../tools/themes";
 import Title from "../Title";
 
-export default function LoginFormTitle(applicationContext: ApplicationContext){
+export default function LoginFormTitle(
+    applicationContext: ApplicationContext,
+    elementParameters: ElementParameters
+): ElementProperties {
     applicationContext.subscribeToThemeListening(() => {
-        changeThemeClasses(containerDiv);        
+        changeThemeClasses(container);        
     });
 
     const theme = applicationContext.getTheme();    
 
-    const containerDiv: HTMLDivElement = createDiv(
-        'login-form-title-container-div',
-        [
-            'w-100',
-            theme,
-            'flex',
-            'flex-row',
-            'flex-horizontal-center'
-        ]
+    const container: HTMLDivElement = createDiv(
+        elementParameters.id,
+        elementParameters.classes,
+        elementParameters.styles
     );
 
-    containerDiv.append(
-        Title(applicationContext)
+    const title = Title(
+        applicationContext,
+        {
+            classes: [
+                'text-color',
+                theme,
+                'h1-title-font',            
+            ],        
+            styles: {
+                
+            },        
+            text: 'Gamebase'
+        }
     );
 
-    return containerDiv;
+    container.append(
+        title.element
+    );
+
+    return {
+        element: container
+    };
 }

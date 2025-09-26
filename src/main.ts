@@ -21,7 +21,20 @@ try{
   switch(pathname){
     case '/':
     case '/login':
-      element = Login(applicationContext);
+      element = Login(
+        applicationContext,
+        {
+          id: 'login-page',
+          classes: [
+              'w-100vw',
+              'h-100vh',
+              'primary-background-color',
+              applicationContext.getTheme(),
+              'flex',
+              'flex-center'
+          ], 
+        }
+      ).element;
       break;
     default:
       throw new Error('undefined pathname: ' + pathname);

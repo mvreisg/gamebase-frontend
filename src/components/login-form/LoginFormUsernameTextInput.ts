@@ -1,112 +1,106 @@
-import type { LoginFormContext } from "../../interfaces/interfaces";
-import { createDiv, createParagraph, createTextInput } from "../../tools/elements";
+import type { ElementParameters, ElementProperties, LoginFormContext } from "../../interfaces/interfaces";
+import { createLabel } from "../../tools/elements";
 import { percent, pxToRem } from "../../tools/measures";
 import { changeThemeClasses } from "../../tools/themes";
 import type { PasswordValidation } from "../../types/types";
+import LoginFormTextInput from "./LoginFormTextInput";
+import LoginFormTextInputWarningParagraph from "./LoginFormTextInputWarningParagraph";
 
-export default function LoginFormUsernameTextInput(applicationContext: LoginFormContext){
+export default function LoginFormUsernameTextInput(
+    applicationContext: LoginFormContext,
+    elementParameters: ElementParameters
+): ElementProperties {
     applicationContext.subscribeToThemeListening(() => {
-        changeThemeClasses(backgroundContainer);        
-        changeThemeClasses(textInput);        
-        changeThemeClasses(warningParagraph);        
+        changeThemeClasses(container);        
     });
 
     const theme = applicationContext.getTheme();    
 
     const usernameListener = function(state: PasswordValidation){
-        let backgroundContainerClasses = [];
+        let containerClasses = [];
         let inputClasses = [];
         switch(state){
             default:
                 throw new Error('Untreated state: ' + state);
             case 'invalid':
-                backgroundContainerClasses = backgroundContainer.className.split(' ');
-                backgroundContainerClasses = backgroundContainerClasses.filter((value) => value !== 'primary-input-background-color');
-                backgroundContainerClasses.push('primary-input-warning-fill-color');
-                backgroundContainer.className = backgroundContainerClasses.join(' ');
+                containerClasses = container.className.split(' ');
+                containerClasses = containerClasses.filter((value) => value !== 'primary-input-background-color');
+                containerClasses.push('primary-input-warning-fill-color');
+                container.className = containerClasses.join(' ');
 
-                inputClasses = textInput.className.split(' ');
+                inputClasses = textInput.element.className.split(' ');
                 inputClasses = inputClasses.filter((value) => value !== 'primary-input-background-color');
                 inputClasses.push('primary-input-warning-fill-color');
-                textInput.className = inputClasses.join(' ');
+                textInput.element.className = inputClasses.join(' ');
                 break;
             case 'valid':
-                backgroundContainerClasses = backgroundContainer.className.split(' ');
-                backgroundContainerClasses = backgroundContainerClasses.filter((value) => value !== 'primary-input-warning-fill-color');
-                backgroundContainerClasses.push('primary-input-background-color');
-                backgroundContainer.className = backgroundContainerClasses.join(' ');
+                containerClasses = container.className.split(' ');
+                containerClasses = containerClasses.filter((value) => value !== 'primary-input-warning-fill-color');
+                containerClasses.push('primary-input-background-color');
+                container.className = containerClasses.join(' ');
 
-                inputClasses = textInput.className.split(' ');
+                inputClasses = textInput.element.className.split(' ');
                 inputClasses = inputClasses.filter((value) => value !== 'primary-input-warning-fill-color');
                 inputClasses.push('primary-input-background-color');
-                textInput.className = inputClasses.join(' ');                
+                textInput.element.className = inputClasses.join(' ');                
                 break;
         }
     }
 
     applicationContext.subscribeToUsernameListening(usernameListener)
 
-    const backgroundContainer: HTMLDivElement = createDiv(
-        'login-form-username-text-input-background-container',
-        [
-            theme,               
-            'primary-border-color',
-            'w-100',
-            'border-box',
-            'position-relative',
-            'flex',
-            'flex-row',
-            'flex-vertical-center',            
-        ],
-        {
-            height: pxToRem(50),
-            borderWidth: pxToRem(4),
-            borderRadius: pxToRem(16),
-            borderStyle: 'solid'
-        }
+    const container: HTMLLabelElement = createLabel(
+        elementParameters.id,
+        elementParameters.classes,
+        elementParameters.styles
     );
 
-    const textInput: HTMLInputElement = createTextInput(
-        'login-form-username-text-input',
-        [
-            theme,               
-            'border-box',
-            'border-0',
-            'padding-0',
-            'text-color',
-            'primary-input-background-color',
-            'text-input-font'
-        ],
+    const textInput = LoginFormTextInput(
+        applicationContext,
         {
-            width: percent(100),
-            height: percent(100),
-            borderRadius: pxToRem(12),
-            padding: pxToRem(11)
+            id: 'login-form-username-text-input',
+            classes: [
+                theme,               
+                'border-box',
+                'border-0',
+                'padding-0',
+                'text-color',
+                'primary-input-background-color',
+                'text-input-font'
+            ],
+            styles: {
+                width: percent(100),
+                height: percent(100),
+                borderRadius: pxToRem(12),
+                padding: pxToRem(11)
+            }
         }
     );
 
     const getValue = function(): string {
-        return textInput.value;
+        return textInput.methods.getValue();
     }
 
-    const warningParagraph: HTMLParagraphElement = createParagraph(
-        'login-form-username-warning-paragraph',
-        [
-            theme,               
-            'position-absolute',
-            'paragraph-font',
-            'warning-text-color'
-        ],
+    const warningParagraph = LoginFormTextInputWarningParagraph(
+        applicationContext,
         {
-            left: pxToRem(11)
-        },
-        'O username não foi informado!'
+            id: 'login-form-username-warning-paragraph',
+            classes: [
+                theme,               
+                'position-absolute',
+                'paragraph-font',
+                'warning-text-color'
+            ],
+            styles: {
+                left: pxToRem(11)
+            },
+            text: 'O username não foi informado!'            
+        }
     );
 
     const setWarningParagraphVisibility = function(isVisible: boolean): void{
-        warningParagraph.style.visibility = isVisible ? 'visible': 'hidden';
+        warningParagraph.methods.setVisibility(isVisible ? 'visible': 'hidden');
     }
-    setWarningParagraphVisibility(false);
 
     const validateInput = function(){
         const isEmpty: boolean = getValue().length === 0;
@@ -114,63 +108,71 @@ export default function LoginFormUsernameTextInput(applicationContext: LoginForm
         applicationContext.setIsUsernameValid(isEmpty === false);            
     }
     
-    warningParagraph.addEventListener('click', () => {
+    warningParagraph.element.addEventListener('click', () => {
         setWarningParagraphVisibility(false);
-        textInput.focus();
+        textInput.element.focus();
     });
 
-    textInput.addEventListener('click', () => {
+    textInput.element.addEventListener('click', () => {
         setWarningParagraphVisibility(false);
-        textInput.focus();
+        textInput.element.focus();
     });    
 
-    textInput.addEventListener('focus', () => {
+    textInput.element.addEventListener('focus', () => {
         setWarningParagraphVisibility(false);
     });        
-
-    textInput.addEventListener('keydown', (event) => {
+    
+    textInput.element.addEventListener('keydown', (event) => {
         switch(event.key){
             case 'Backspace':
             case 'Delete':
+                validateInput();
+                break;                
             case 'Control':
             case 'Enter':
             case 'Shift':                
             case 'Alt':         
-                setWarningParagraphVisibility(getValue().length === 0);
+            case 'Tab':                
                 break;
             default:
-                setWarningParagraphVisibility(false);                
+                validateInput();
                 break;
         }        
     });    
 
-    textInput.addEventListener('keyup', (event) => {
+    textInput.element.addEventListener('keyup', (event) => {
         switch(event.key){
             case 'Backspace':
             case 'Delete':
+                validateInput();
+                break;                
             case 'Control':
             case 'Enter':
             case 'Shift':                
-            case 'Alt':
-                setWarningParagraphVisibility(getValue().length === 0);
+            case 'Alt':         
+            case 'Tab':                
                 break;
-            default:                
+            default:
+                validateInput();
                 break;
-        }         
-        validateInput();
+        }                 
     });
 
-    textInput.addEventListener('focusout', () => {
+    textInput.element.addEventListener('focusout', () => {
         validateInput();
     });      
 
-    backgroundContainer.append(
-        textInput
+    container.append(
+        textInput.element
     );
 
-    backgroundContainer.append(
-        warningParagraph
+    container.append(
+        warningParagraph.element
     );
 
-    return backgroundContainer;
+    setWarningParagraphVisibility(false);
+
+    return {
+        element: container
+    };
 }

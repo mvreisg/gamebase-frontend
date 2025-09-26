@@ -1,21 +1,16 @@
-import type { ApplicationContext } from "../../interfaces/interfaces";
-import { createDiv } from "../../tools/elements";
-import { pxToRem } from "../../tools/measures";
+import type { ApplicationContext, ElementParameters, ElementProperties } from "../../interfaces/interfaces";
 import ThemeToggler from "../ThemeToggler";
 
-export default function LoginFormThemeToggler(applicationContext: ApplicationContext){
-    const container = createDiv(
-        'login-form-theme-toggler-container',
-        [],
-        {
-            paddingTop: pxToRem(14),
-            paddingBottom: pxToRem(14),
-        }                
+export default function LoginFormThemeToggler(
+    applicationContext: ApplicationContext,
+    elementParameters: ElementParameters
+): ElementProperties {
+    const themeToggler = ThemeToggler(
+        applicationContext,
+        elementParameters
     );
 
-    container.append(
-        ThemeToggler(applicationContext)
-    )
-
-    return container;
+    return {
+        element: themeToggler.element
+    };
 }
